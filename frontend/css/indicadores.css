@@ -1,0 +1,112 @@
+/* ========================= */
+/* INDICADORES PRO */
+/* ========================= */
+.indicator-box {
+  padding: 22px;
+  border-radius: 16px;
+
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid #e2e8f0;
+
+  text-align: left;
+
+  position: relative;
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.04),
+    0 2px 6px rgba(0,0,0,0.02);
+
+  transition: all 0.25s ease;
+}
+
+/* glow sutil */
+.indicator-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(circle at top right,
+    rgba(37,99,235,0.08),
+    transparent
+  );
+}
+
+/* hover premium */
+.indicator-box:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.08),
+    0 4px 10px rgba(0,0,0,0.04);
+}
+
+
+/* ========================= */
+/* VALOR PRINCIPAL */
+/* ========================= */
+.indicator-box h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 6px;
+
+  color: #0f172a;
+}
+
+
+/* ========================= */
+/* LABEL */
+/* ========================= */
+.indicator-box span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+/* ========================= */
+/* VARIANTES (IMPORTANTE) */
+/* ========================= */
+.indicator-box.success {
+  border-left: 4px solid #10b981;
+}
+
+.indicator-box.warning {
+  border-left: 4px solid #f59e0b;
+}
+
+.indicator-box.danger {
+  border-left: 4px solid #ef4444;
+}
+
+.indicator-box.primary {
+  border-left: 4px solid #2563eb;
+}
+
+
+/* ========================= */
+/* ICONO (NIVEL PRO) */
+/* ========================= */
+.indicator-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  font-size: 18px;
+  opacity: 0.3;
+}
+
+
+/* ========================= */
+/* CHART WRAPPER PRO */
+/* ========================= */
+.chart-container {
+  height: 300px;
+  position: relative;
+
+  padding-top: 10px;
+}
+
+/* asegura que el chart siempre se vea */
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
