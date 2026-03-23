@@ -20,11 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctxOcupacion = ocupacionEl.getContext("2d");
   const ctxEspera = esperaEl.getContext("2d");
 
-
   /* ========================= */
   /* OCUPACIÓN MENSUAL (LINE) */
   /* ========================= */
-  new Chart(ctxOcupacion, {
+
+  const ocupacionChart = new Chart(ctxOcupacion, {
     type: "line",
 
     data: {
@@ -41,7 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
         borderWidth: 3,
 
         pointRadius: 0,
-        pointHoverRadius: 6
+        pointHoverRadius: 6,
+        pointBackgroundColor: "#2563eb"
       }]
     },
 
@@ -49,20 +50,64 @@ document.addEventListener("DOMContentLoaded", () => {
       responsive: true,
       maintainAspectRatio: false,
 
-      plugins: {
-        legend: { display: false }
+      interaction: {
+        mode: "index",
+        intersect: false
       },
 
-      scales: {
-        y: {
-          ticks: {
-            callback: (value) => value + "%"
+      plugins: {
+        legend: { display: false },
+
+        tooltip: {
+          backgroundColor: "#0f172a",
+          titleColor: "#fff",
+          bodyColor: "#cbd5f5",
+          padding: 10,
+          displayColors: false,
+          callbacks: {
+            label: (ctx) => ctx.raw + "%"
           }
         }
       },
 
       animation: {
-        duration: 900
+        duration: 1400,
+        easing: "easeOutQuart"
+      },
+
+      animations: {
+        x: {
+          type: "number",
+          easing: "easeOutQuart",
+          duration: 1200,
+          from: 0
+        },
+        y: {
+          type: "number",
+          easing: "easeOutQuart",
+          duration: 1200,
+          from: 0
+        },
+        tension: {
+          duration: 1000,
+          easing: "easeOutQuart",
+          from: 0.1,
+          to: 0.4
+        }
+      },
+
+      scales: {
+        x: {
+          grid: { display: false }
+        },
+        y: {
+          grid: {
+            color: "rgba(0,0,0,0.05)"
+          },
+          ticks: {
+            callback: (value) => value + "%"
+          }
+        }
       }
     }
   });
@@ -71,7 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ========================= */
   /* TIEMPO DE ESPERA (BAR) */
   /* ========================= */
-  new Chart(ctxEspera, {
+
+  const esperaChart = new Chart(ctxEspera, {
     type: "bar",
 
     data: {
@@ -86,7 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
           "#10b981"
         ],
 
-        borderRadius: 8
+        borderRadius: 10,
+        hoverBackgroundColor: [
+          "#dc2626",
+          "#d97706",
+          "#059669"
+        ]
       }]
     },
 
@@ -95,13 +146,48 @@ document.addEventListener("DOMContentLoaded", () => {
       maintainAspectRatio: false,
 
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+
+        tooltip: {
+          backgroundColor: "#0f172a",
+          titleColor: "#fff",
+          bodyColor: "#cbd5f5",
+          padding: 10,
+          callbacks: {
+            label: (ctx) => ctx.raw + " min"
+          }
+        }
       },
 
       animation: {
-        duration: 900
+        duration: 1400,
+        easing: "easeOutBack"
+      },
+
+      scales: {
+        x: {
+          grid: { display: false }
+        },
+        y: {
+          grid: {
+            color: "rgba(0,0,0,0.05)"
+          }
+        }
       }
     }
   });
+
+
+  /* ========================= */
+  /* SECUENCIA DE ENTRADA PRO */
+  /* ========================= */
+
+  setTimeout(() => {
+    ocupacionChart.update();
+  }, 200);
+
+  setTimeout(() => {
+    esperaChart.update();
+  }, 400);
 
 });
