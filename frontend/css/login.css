@@ -8,9 +8,8 @@
   overflow: hidden;
 }
 
-
 /* ========================= */
-/* IZQUIERDA (HERO PRO) */
+/* HERO IZQUIERDO */
 /* ========================= */
 .login-hero {
   flex: 1;
@@ -19,31 +18,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* efecto leve zoom */
   animation: zoomBg 20s ease infinite alternate;
 }
 
-/* overlay PRO (MEJORADO) */
 .login-hero::before {
   content: "";
   position: absolute;
   inset: 0;
-
   background: linear-gradient(
     to right,
     rgba(15,23,42,0.85) 20%,
     rgba(15,23,42,0.65) 60%,
     rgba(15,23,42,0.35) 100%
   );
-
   backdrop-filter: blur(2px);
 }
 
-
-/* ========================= */
-/* CONTENIDO HERO */
-/* ========================= */
 .hero-content {
   position: relative;
   z-index: 2;
@@ -64,9 +54,8 @@
   font-size: 15px;
 }
 
-
 /* ========================= */
-/* STATS PRO */
+/* STATS */
 /* ========================= */
 .hero-stats {
   display: flex;
@@ -78,10 +67,8 @@
   background: rgba(255,255,255,0.06);
   padding: 16px 18px;
   border-radius: 14px;
-
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.15);
-
   transition: all 0.3s ease;
 }
 
@@ -91,46 +78,26 @@
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
-.hero-stats h3 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.hero-stats span {
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-
 /* ========================= */
-/* DERECHA (LOGIN PRO) */
+/* LOGIN DERECHO */
 /* ========================= */
 .login-container {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-
   background: linear-gradient(180deg, #f8fafc, #eef2f7);
 }
 
-
-/* ========================= */
-/* CARD LOGIN */
-/* ========================= */
 .login-box {
   width: 100%;
   max-width: 380px;
-
   background: white;
   padding: 45px;
-
   border-radius: 18px;
-
   box-shadow:
     0 20px 40px rgba(0,0,0,0.08),
     0 5px 15px rgba(0,0,0,0.05);
-
   animation: fadeSlide 0.8s ease;
   transition: 0.3s;
 }
@@ -138,7 +105,6 @@
 .login-box:hover {
   transform: translateY(-3px);
 }
-
 
 /* ========================= */
 /* TEXTOS */
@@ -154,26 +120,18 @@
   font-size: 14px;
 }
 
-
 /* ========================= */
-/* INPUTS PRO */
+/* INPUTS */
 /* ========================= */
 .login-box input {
   width: 100%;
   padding: 14px;
   margin: 10px 0;
-
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-
   background: #f8fafc;
-
   transition: all 0.25s ease;
   font-size: 14px;
-}
-
-.login-box input:hover {
-  border-color: #cbd5e1;
 }
 
 .login-box input:focus {
@@ -183,26 +141,18 @@
   outline: none;
 }
 
-
 /* ========================= */
-/* BOTÓN PRO */
+/* BOTÓN PRINCIPAL */
 /* ========================= */
 .login-box button {
   width: 100%;
   padding: 14px;
-
   background: linear-gradient(90deg, #2563eb, #3b82f6);
   color: white;
-
   border: none;
   border-radius: 10px;
-
   margin-top: 12px;
   cursor: pointer;
-
-  font-weight: 500;
-  letter-spacing: 0.3px;
-
   transition: all 0.25s ease;
 }
 
@@ -211,23 +161,8 @@
   box-shadow: 0 12px 25px rgba(37,99,235,0.3);
 }
 
-.login-box button:active {
-  transform: scale(0.98);
-}
-
-
 /* ========================= */
-/* ERROR */
-/* ========================= */
-.error {
-  color: #ef4444;
-  margin-top: 10px;
-  font-size: 13px;
-}
-
-
-/* ========================= */
-/* DEMO BUTTONS */
+/* MODO PRUEBA (FIX REAL) */
 /* ========================= */
 .quick-access {
   margin-top: 25px;
@@ -238,26 +173,35 @@
   color: #64748b;
 }
 
+/* 🔥 BOTONES CORREGIDOS */
 .quick-access button {
-  margin-right: 10px;
+  width: 100%;
   margin-top: 10px;
-
-  padding: 8px 14px;
-
+  padding: 12px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
 
-  background: #e2e8f0;
+  font-size: 14px;
+  font-weight: 500;
+
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
+/* hover */
 .quick-access button:hover {
-  background: #cbd5e1;
-  transform: translateY(-1px);
+  background: #94a3b8;
+  transform: translateY(-2px);
 }
 
+/* activo */
+.quick-access button.active {
+  background: #1e293b;
+}
 
 /* ========================= */
 /* VOLVER */
@@ -271,11 +215,6 @@
   text-decoration: none;
   font-size: 14px;
 }
-
-.back-link a:hover {
-  text-decoration: underline;
-}
-
 
 /* ========================= */
 /* ANIMACIONES */
@@ -291,28 +230,16 @@
   }
 }
 
-/* zoom suave imagen */
 @keyframes zoomBg {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-  }
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
 }
-
 
 /* ========================= */
 /* RESPONSIVE */
 /* ========================= */
 @media (max-width: 900px) {
-
   .login-hero {
     display: none;
   }
-
-  .login-container {
-    flex: 1;
-  }
-
 }

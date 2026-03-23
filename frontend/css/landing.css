@@ -279,3 +279,43 @@
   }
 
 }
+/* ========================= */
+/* BOTONES MODO PRUEBA */
+/* ========================= */
+
+.btn-modo {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+
+  border-radius: 10px;
+  border: none;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+/* 🔥 HOVER (cuando pasas el mouse) */
+.btn-modo:hover {
+  background: #94a3b8; /* gris elegante */
+  transform: translateY(-2px);
+}
+
+/* 🔥 CLICK / ACTIVO */
+.btn-modo.active {
+  background: #1e293b; /* gris oscuro */
+  color: white;
+  transform: scale(0.97);
+}
+
+/* 🔥 EFECTO PRESIONADO */
+.btn-modo:active {
+  transform: scale(0.95);
+}
