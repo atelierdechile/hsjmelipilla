@@ -21,158 +21,209 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctxDonut = ctxDonutEl.getContext("2d");
 
   /* ========================= */
-  /* KPI ANIMATION MEJORADO  */
+  /* KPI ANIMATION */
   /* ========================= */
   function animateValue(id, end, duration = 800) {
     const el = document.getElementById(id);
-    const start = 0;
     let startTime = null;
 
     function animate(timestamp) {
       if (!startTime) startTime = timestamp;
       const progress = timestamp - startTime;
-
-      // Calculamos el valor actual sin redondear todavía para soportar decimales
       const value = Math.min((progress / duration) * end, end);
 
-      // Formateamos dependiendo del tipo de KPI
-      if (id === "kpiOcupacion") {
-        el.innerText = Math.floor(value) + "%";
-      } else if (id === "kpiLetalidad") {
-        el.innerText = value.toFixed(1) + "%";
-      } else if (id === "kpiEstada" || id === "kpiRotacion") {
-        el.innerText = value.toFixed(1);
-      } else {
-        el.innerText = Math.floor(value);
-      }
+      if (id === "kpiOcupacion") el.innerText = Math.floor(value) + "%";
+      else if (id === "kpiLetalidad") el.innerText = value.toFixed(1) + "%";
+      else el.innerText = value.toFixed(1);
 
-      if (progress < duration) {
-        requestAnimationFrame(animate);
-      }
+      if (progress < duration) requestAnimationFrame(animate);
     }
 
     requestAnimationFrame(animate);
   }
 
   animateValue("kpiOcupacion", 85);
-  animateValue("kpiEstada", 4.2); 
+  animateValue("kpiEstada", 4.2);
   animateValue("kpiRotacion", 5.4);
   animateValue("kpiLetalidad", 2.1);
 
+  /* ========================= */
+  /* BAR CHART PRO */
+  /* ========================= */
+  const datasetsOriginal = [
+    { label: "Altas Médicas", data: [30, 40, 45, 35, 50], color: "#10b981" },
+    { label: "Traslados", data: [8, 10, 12, 10, 20], color: "#f59e0b" },
+    { label: "Egresos Fallecidos", data: [2, 5, 3, 5, 10], color: "#ef4444" }
+  ];
 
-  /* ========================= */
-  /* GRÁFICO DE BARRAS APILADAS */
-  /* ========================= */
-  new Chart(ctxLine, {
+  let activosBar = [true, true, true];
+
+  const barChart = new Chart(ctxLine, {
     type: "bar",
     data: {
       labels: ["Ene", "Feb", "Mar", "Abr", "May"],
-      datasets: [
-        {
-          label: "Altas Médicas",
-          data: [30, 40, 45, 35, 50],
-          backgroundColor: "#10b981",
-          borderRadius: 4
-        },
-        {
-          label: "Traslados",
-          data: [8, 10, 12, 10, 20],
-          backgroundColor: "#f59e0b",
-          borderRadius: 4
-        },
-        {
-          label: "Egresos Fallecidos",
-          data: [2, 5, 3, 5, 10],
-          backgroundColor: "#ef4444",
-          borderRadius: 4
-        }
-      ]
+      datasets: datasetsOriginal.map(d => ({
+        label: d.label,
+        data: d.data,
+        backgroundColor: d.color,
+        borderRadius: 6
+      }))
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+
       plugins: {
-        legend: { 
+        legend: {
           position: "bottom",
-          labels: { font: { family: "'Inter', sans-serif" } }
+
+          onClick: (e, legendItem, legend) => {
+            const index = legendItem.datasetIndex;
+
+            activosBar[index] = !activosBar[index];
+
+            barChart.data.datasets[index].data = activosBar[index]
+              ? datasetsOriginal[index].data
+              : datasetsOriginal[index].data.map(() => 0);
+
+            barChart.data.datasets[index].backgroundColor =
+              activosBar[index] ? datasetsOriginal[index].color : "#e5e7eb";
+
+            barChart.update();
+          }
         },
+
         tooltip: {
-          mode: 'index',
-          intersect: false
+          mode: "index",
+          intersect: false,
+          backgroundColor: "#111827",
+          titleColor: "#fff",
+          bodyColor: "#fff",
+          padding: 10,
+          cornerRadius: 8
         }
       },
+
       scales: {
         x: { stacked: true },
         y: { stacked: true }
-      },
-      animation: {
-        duration: 1000
       }
     }
   });
 
+  /* ========================= */
+  /* DONUT PRO (FIX TOTAL) */
+  /* ========================= */
+  const dataOriginal = [40, 30, 15, 15];
+  let activos = [true, true, true, true];
+  let hoveredIndex = null;
 
-  /* ========================= */
-  /* DONUT CENTER TEXT PLUGIN */
-  /* ========================= */
+  const colores = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"];
+  const colorOff = "#e5e7eb";
+
+  /* 🔥 PLUGIN FIXED */
   const centerTextPlugin = {
     id: "centerText",
-    beforeDraw(chart) {
-      const { width } = chart;
-      const { height } = chart;
-      const ctx = chart.ctx;
 
-      ctx.restore();
-      const fontSize = (height / 100).toFixed(2);
-      ctx.font = `${fontSize}em Inter`;
+    afterDatasetsDraw(chart) {
+      const { ctx, chartArea } = chart;
+      if (!chartArea) return;
+
+      const { left, right, top, bottom } = chartArea;
+
+      const width = right - left;
+      const height = bottom - top;
+
+      ctx.save();
+      ctx.font = "bold 28px Inter";
+      ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-      const text = total + "%";
+      const data = chart.data.datasets[0].data;
 
-      const textX = Math.round((width - ctx.measureText(text).width) / 2);
-      const textY = height / 2;
+      let valor = 0;
+
+      if (
+        hoveredIndex !== null &&
+        data[hoveredIndex] !== undefined
+      ) {
+        valor = data[hoveredIndex];
+      } else {
+        valor = data.reduce((a, b) => a + (Number(b) || 0), 0);
+      }
 
       ctx.fillStyle = "#0f172a";
-      ctx.fillText(text, textX, textY);
-      ctx.save();
+      ctx.fillText(valor + "%", left + width / 2, top + height / 2);
+
+      ctx.restore();
     }
   };
 
-  /* ========================= */
-  /* DONUT CHART */
-  /* ========================= */
-  new Chart(ctxDonut, {
+  const donutChart = new Chart(ctxDonut, {
     type: "doughnut",
     data: {
       labels: ["Medicina", "Cirugía", "Pediatría", "Maternidad"],
       datasets: [{
-        data: [40, 30, 15, 15],
-        backgroundColor: [
-          "#3b82f6",
-          "#10b981",
-          "#f59e0b",
-          "#ef4444"
-        ]
+        data: [...dataOriginal],
+        backgroundColor: [...colores],
+        hoverOffset: 30
       }]
     },
+
     options: {
       responsive: true,
-      maintainAspectRatio: true,
-
       cutout: "70%",
 
       plugins: {
         legend: {
-          position: "bottom"
+          position: "bottom",
+
+          onClick: (e, legendItem, legend) => {
+            const index = legendItem.index;
+
+            activos[index] = !activos[index];
+
+            donutChart.data.datasets[0].data = dataOriginal.map((v, i) =>
+              activos[i] ? v : 0
+            );
+
+            donutChart.data.datasets[0].backgroundColor =
+              dataOriginal.map((_, i) =>
+                activos[i] ? colores[i] : colorOff
+              );
+
+            donutChart.update();
+          }
+        },
+
+        tooltip: {
+          backgroundColor: "#111827",
+          titleColor: "#fff",
+          bodyColor: "#fff",
+          padding: 12,
+          cornerRadius: 10,
+          callbacks: {
+            label: (ctx) => `${ctx.label}: ${ctx.raw}%`
+          }
         }
       },
 
-      animation: {
-        animateRotate: true,
-        duration: 1200
+      /* 🔥 HOVER FIX */
+      onHover: (event, elements, chart) => {
+        const canvas = event.native.target;
+
+        if (elements.length > 0) {
+          canvas.style.cursor = "pointer";
+          hoveredIndex = elements[0].index;
+        } else {
+          canvas.style.cursor = "default";
+          hoveredIndex = null;
+        }
+
+        chart.update("none"); // 🔥 CLAVE
       }
     },
+
     plugins: [centerTextPlugin]
   });
 

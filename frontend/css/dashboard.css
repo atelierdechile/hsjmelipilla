@@ -331,3 +331,24 @@ canvas {
     grid-template-columns: 1fr;
   }
 }
+#ocupacion {
+  transition: transform 0.3s ease;
+}
+
+#ocupacion:hover {
+  transform: scale(1.05);
+}
+/* leyenda apagada */
+.chartjs-legend li.hidden span {
+  opacity: 0.3 !important;
+}
+
+/* hover más claro */
+.chartjs-legend li {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chartjs-legend li:hover {
+  transform: scale(1.05);
+}
