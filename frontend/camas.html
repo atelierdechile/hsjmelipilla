@@ -44,48 +44,20 @@
       </div>
     </div>
 
-    <!-- ========================= -->
-    <!-- KPI CARDS -->
-    <!-- ========================= -->
+    <!-- KPI -->
     <section class="kpi-grid">
-
-      <div class="kpi-card">
-        <span>Disponibles</span>
-        <h2 id="kpiDisponibles">0</h2>
-      </div>
-
-      <div class="kpi-card">
-        <span>Ocupadas</span>
-        <h2 id="kpiOcupadas">0</h2>
-      </div>
-
-      <div class="kpi-card">
-        <span>Limpieza</span>
-        <h2 id="kpiLimpieza">0</h2>
-      </div>
-
-      <div class="kpi-card">
-        <span>Ocupación</span>
-        <h2 id="kpiOcupacion">0%</h2>
-      </div>
-
-      <div class="kpi-card">
-        <span>Estadía Prom.</span>
-        <h2 id="kpiEstadia">0 días</h2>
-      </div>
-
+      <div class="kpi-card"><span>Disponibles</span><h2 id="kpiDisponibles">0</h2></div>
+      <div class="kpi-card"><span>Ocupadas</span><h2 id="kpiOcupadas">0</h2></div>
+      <div class="kpi-card"><span>Limpieza</span><h2 id="kpiLimpieza">0</h2></div>
+      <div class="kpi-card"><span>Ocupación</span><h2 id="kpiOcupacion">0%</h2></div>
+      <div class="kpi-card"><span>Estadía Prom.</span><h2 id="kpiEstadia">0 días</h2></div>
     </section>
 
-    <!-- ========================= -->
     <!-- TABLA -->
-    <!-- ========================= -->
     <section class="card">
-
       <div class="card-header">
         <h3>🛏️ Estado de camas</h3>
-        <button class="btn small primary" onclick="abrirModalIngresoGlobal()">
-          + Nuevo Ingreso
-        </button>
+        <button class="btn small primary" onclick="abrirModalIngresoGlobal()">+ Nuevo Ingreso</button>
       </div>
 
       <table>
@@ -141,9 +113,7 @@
   </main>
 </div>
 
-<!-- ========================= -->
-<!-- MODAL -->
-<!-- ========================= -->
+<!-- MODAL INGRESO -->
 <div id="modalIngreso" class="modal-overlay">
   <div class="modal-content">
 
@@ -191,20 +161,55 @@
   </div>
 </div>
 
+<!-- ========================= -->
+<!-- SCRIPTS -->
+<!-- ========================= -->
+
 <script src="js/auth.js"></script>
 
 <script>
 initProtectedPage();
 
+/* ========================= */
+/* USUARIO */
+/* ========================= */
 const usuario = JSON.parse(localStorage.getItem("auth"));
 if (usuario) {
   document.getElementById("usuario").innerText = `👤 ${usuario.username}`;
 }
 
+/* ========================= */
+/* LOGOUT */
+/* ========================= */
 function logout() {
   localStorage.removeItem("auth");
   window.location.href = "login.html";
 }
+
+/* ========================= */
+/* 🔥 MENU GLOBAL FIX */
+/* ========================= */
+const menuItems = document.querySelectorAll("#menu li[data-page]");
+const currentPage = window.location.pathname.split("/").pop().split("?")[0];
+
+menuItems.forEach(item => {
+
+  const page = item.dataset.page;
+
+  // ACTIVO
+  if (currentPage.includes(page)) {
+    item.classList.add("active");
+  }
+
+  // CLICK
+  item.addEventListener("click", () => {
+
+    // 🔥 cerrar modales SIEMPRE
+    document.querySelectorAll(".modal-overlay").forEach(m => m.remove());
+
+    window.location.href = page;
+  });
+});
 </script>
 
 <script src="js/camas.js"></script>
