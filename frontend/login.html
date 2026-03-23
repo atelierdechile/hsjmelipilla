@@ -7,26 +7,19 @@
 
   <title>Acceso | Hospital San José</title>
 
-  <!-- CSS GLOBAL -->
+  <!-- CSS -->
   <link rel="stylesheet" href="css/global.css">
-
-  <!-- CSS SOLO LOGIN -->
   <link rel="stylesheet" href="css/login.css">
-
 </head>
 
 <body>
 
-<!-- ========================= -->
-<!-- LOGIN WRAPPER -->
-<!-- ========================= -->
 <div class="login-wrapper">
 
   <!-- ========================= -->
-  <!-- IZQUIERDA (IMAGEN + INFO) -->
+  <!-- HERO -->
   <!-- ========================= -->
   <div class="login-hero">
-
     <div class="hero-content">
       <h1>🏥 Hospital San José</h1>
 
@@ -50,12 +43,10 @@
         </div>
       </div>
     </div>
-
   </div>
 
-
   <!-- ========================= -->
-  <!-- DERECHA (FORM LOGIN) -->
+  <!-- LOGIN -->
   <!-- ========================= -->
   <div class="login-container">
 
@@ -64,25 +55,39 @@
       <h2>Acceso al sistema</h2>
       <p class="subtitle">Ingresa tus credenciales institucionales</p>
 
-      <input type="text" id="user" placeholder="Usuario">
-      <input type="password" id="pass" placeholder="Contraseña">
+      <!-- 🔥 FORM (MEJOR UX) -->
+      <form onsubmit="login(); return false;">
 
-      <!-- IMPORTANTE: ID para UX -->
-      <button id="btn-login" onclick="login()">Ingresar</button>
+        <input type="text" id="user" placeholder="Usuario" required>
+        <input type="password" id="pass" placeholder="Contraseña" required>
+
+        <button id="btn-login" type="submit">Ingresar</button>
+
+      </form>
 
       <p id="error" class="error"></p>
 
-      <!-- DEMO -->
+      <!-- ========================= -->
+      <!-- MODO PRUEBA -->
+      <!-- ========================= -->
       <div class="quick-access">
         <span>Modo prueba:</span>
-        <button onclick="demoLogin('admin')">Admin</button>
-        <button onclick="demoLogin('medico')">Doctor</button>
+
+        <button type="button" onclick="demoLogin('admin')">
+          👑 Admin
+        </button>
+
+        <button type="button" onclick="demoLogin('medico')">
+          🩺 Doctor
+        </button>
       </div>
 
-      <!-- VOLVER -->
-      <div class="back-link">
-        <a href="index.html">← Volver al inicio</a>
-      </div>
+      <!-- ========================= -->
+      <!-- BOTÓN VOLVER (FIX UX) -->
+      <!-- ========================= -->
+      <button class="btn-back" onclick="window.location.href='index.html'">
+        ← Volver al inicio
+      </button>
 
     </div>
 
