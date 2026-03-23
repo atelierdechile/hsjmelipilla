@@ -18,13 +18,9 @@
 
 <body class="app">
 
-<!-- ========================= -->
 <!-- AUTH -->
-<!-- ========================= -->
 <script src="js/auth.js"></script>
-<script>
-  initProtectedPage();
-</script>
+<script>initProtectedPage();</script>
 
 <div class="layout">
 
@@ -32,7 +28,6 @@
   <!-- SIDEBAR -->
   <!-- ========================= -->
   <aside class="sidebar">
-
     <div>
       <div class="logo">🏥 Hospital SJ</div>
 
@@ -47,27 +42,40 @@
     </div>
 
     <div class="user-box" id="usuario"></div>
-
   </aside>
 
   <!-- ========================= -->
   <!-- MAIN -->
   <!-- ========================= -->
-  <main class="main">
+  <main class="main" id="contenidoPDF">
 
     <!-- HEADER -->
-    <div class="topbar">
-      <div>
+    <header class="topbar">
+
+      <div class="topbar-left">
         <h1 class="rem-title">REM - Nivel de Cuidado</h1>
         <span class="status">● Datos simulados</span>
+
+        <!-- NIVEL -->
+        <div id="nivelCuidado" class="nivel-cuidado"></div>
       </div>
 
       <div class="filters">
-        <select id="selectorNivel"></select>
-      </div>
-    </div>
 
+        <select id="selectorNivel" aria-label="Seleccionar nivel de cuidado"></select>
+
+        <!-- BOTÓN PDF -->
+        <button id="btnExportarPDF" class="btn-pdf" title="Exportar informe en PDF">
+          📄 Exportar PDF
+        </button>
+
+      </div>
+
+    </header>
+
+    <!-- ========================= -->
     <!-- KPIs -->
+    <!-- ========================= -->
     <section class="kpis">
 
       <div class="card kpi primary">
@@ -92,16 +100,52 @@
 
     </section>
 
-    <!-- GRÁFICOS -->
-    <section class="grid-1">
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+    <section class="grid-2">
 
-      <div class="card">
-        <h3>📈 Egresos</h3>
+      <!-- IZQUIERDA -->
+      <div class="col-left">
 
-        <div class="chart-container">
-          <canvas id="graficoEgresos"></canvas>
+        <!-- GRÁFICO -->
+        <div class="card">
+          <h3>📈 Número de egresos</h3>
+          <div class="chart-container">
+            <canvas id="graficoEgresos"></canvas>
+          </div>
         </div>
+
+        <!-- DONUT -->
+        <div class="card">
+          <h3>📊 Índice de rotación</h3>
+          <div class="chart-container donut-wrapper">
+            <canvas id="graficoDonut"></canvas>
+            <div class="donut-center" id="donutValor">--%</div>
+          </div>
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="card resumen">
+          <h3>📊 Indicadores</h3>
+
+          <ul id="resumenIndicadores" class="resumen-lista">
+            <li class="placeholder">Cargando datos...</li>
+          </ul>
+
+        </div>
+
       </div>
+
+      <!-- DERECHA -->
+      <aside class="card glosas">
+        <h3>📘 Glosas</h3>
+
+        <div id="contenedorGlosas">
+          <p class="placeholder">Selecciona un nivel para ver información...</p>
+        </div>
+
+      </aside>
 
     </section>
 
@@ -110,23 +154,29 @@
 </div>
 
 <!-- ========================= -->
-<!-- SCRIPTS -->
+<!-- LIBRERÍAS -->
 <!-- ========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- APP -->
 <script src="js/rem.js"></script>
 
+<!-- ========================= -->
+<!-- INIT UI -->
+<!-- ========================= -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ========================= */
-  /* MENÚ DINÁMICO */
-  /* ========================= */
+  /* MENÚ */
   const menuItems = document.querySelectorAll("#menu li[data-page]");
   const currentPage = window.location.pathname.split("/").pop();
 
   menuItems.forEach(item => {
-
     if (item.dataset.page === currentPage) {
       item.classList.add("active");
     }
@@ -134,24 +184,18 @@ document.addEventListener("DOMContentLoaded", () => {
     item.addEventListener("click", () => {
       window.location.href = item.dataset.page;
     });
-
   });
 
-  /* ========================= */
   /* USUARIO */
-  /* ========================= */
   const usuario = JSON.parse(localStorage.getItem("auth"));
-
   if (usuario) {
     document.getElementById("usuario").innerText =
       `👤 ${usuario.username || "Usuario"}`;
   }
 
 });
-
-/* ========================= */
+  
 /* LOGOUT */
-/* ========================= */
 function logout() {
   localStorage.removeItem("auth");
   window.location.href = "login.html";

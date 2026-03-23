@@ -3,6 +3,11 @@
     {
       "codigo": 405,
       "nombre": "UCI Adulto",
+      "nivel_cuidado": {
+        "tipo": "Crítico",
+        "color": "red"
+      },
+
       "indicadores": {
         "dias_cama_disponibles": 90,
         "dias_cama_ocupados": 70,
@@ -10,14 +15,46 @@
         "indice_ocupacional": 78,
         "indice_rotacion": 1.2
       },
+
+      "resumen": {
+        "letalidad": 4.2,
+        "egresos_total": 60,
+        "promedio_camas": 85,
+        "promedio_estada": 5,
+        "traslados": 13
+      },
+
       "egresos": [
         { "mes": "Ene", "altas": 20, "traslados": 5, "fallecidos": 3 },
-        { "mes": "Feb", "altas": 25, "traslados": 8, "fallecidos": 4 }
+        { "mes": "Feb", "altas": 25, "traslados": 8, "fallecidos": 4 },
+        { "mes": "Mar", "altas": 30, "traslados": 10, "fallecidos": 5 },
+        { "mes": "Abr", "altas": 28, "traslados": 7, "fallecidos": 4 }
+      ],
+
+      "glosas": [
+        {
+          "titulo": "Índice Ocupacional",
+          "descripcion": "Porcentaje de camas ocupadas respecto al total disponible."
+        },
+        {
+          "titulo": "Días de Estada",
+          "descripcion": "Promedio de días que un paciente permanece hospitalizado."
+        },
+        {
+          "titulo": "Índice de Rotación",
+          "descripcion": "Cantidad de pacientes atendidos por cama en un periodo."
+        }
       ]
     },
+
     {
       "codigo": 406,
       "nombre": "UTI Adulto",
+      "nivel_cuidado": {
+        "tipo": "Intermedio",
+        "color": "orange"
+      },
+
       "indicadores": {
         "dias_cama_disponibles": 80,
         "dias_cama_ocupados": 60,
@@ -25,14 +62,46 @@
         "indice_ocupacional": 75,
         "indice_rotacion": 1.5
       },
+
+      "resumen": {
+        "letalidad": 2.5,
+        "egresos_total": 75,
+        "promedio_camas": 78,
+        "promedio_estada": 4,
+        "traslados": 16
+      },
+
       "egresos": [
         { "mes": "Ene", "altas": 30, "traslados": 6, "fallecidos": 2 },
-        { "mes": "Feb", "altas": 35, "traslados": 10, "fallecidos": 3 }
+        { "mes": "Feb", "altas": 35, "traslados": 10, "fallecidos": 3 },
+        { "mes": "Mar", "altas": 40, "traslados": 12, "fallecidos": 3 },
+        { "mes": "Abr", "altas": 38, "traslados": 9, "fallecidos": 2 }
+      ],
+
+      "glosas": [
+        {
+          "titulo": "Índice Ocupacional",
+          "descripcion": "Relación entre camas ocupadas y disponibles en UTI."
+        },
+        {
+          "titulo": "Días de Estada",
+          "descripcion": "Duración promedio de hospitalización en cuidados intermedios."
+        },
+        {
+          "titulo": "Índice de Rotación",
+          "descripcion": "Frecuencia de uso de camas en el servicio."
+        }
       ]
     },
+
     {
       "codigo": 416,
       "nombre": "Obstetricia",
+      "nivel_cuidado": {
+        "tipo": "Básico",
+        "color": "green"
+      },
+
       "indicadores": {
         "dias_cama_disponibles": 100,
         "dias_cama_ocupados": 85,
@@ -40,9 +109,35 @@
         "indice_ocupacional": 85,
         "indice_rotacion": 2.0
       },
+
+      "resumen": {
+        "letalidad": 0.5,
+        "egresos_total": 110,
+        "promedio_camas": 95,
+        "promedio_estada": 3,
+        "traslados": 5
+      },
+
       "egresos": [
         { "mes": "Ene", "altas": 50, "traslados": 2, "fallecidos": 1 },
-        { "mes": "Feb", "altas": 60, "traslados": 3, "fallecidos": 1 }
+        { "mes": "Feb", "altas": 60, "traslados": 3, "fallecidos": 1 },
+        { "mes": "Mar", "altas": 70, "traslados": 4, "fallecidos": 2 },
+        { "mes": "Abr", "altas": 65, "traslados": 3, "fallecidos": 1 }
+      ],
+
+      "glosas": [
+        {
+          "titulo": "Índice Ocupacional",
+          "descripcion": "Nivel de uso de camas en maternidad."
+        },
+        {
+          "titulo": "Días de Estada",
+          "descripcion": "Tiempo promedio de hospitalización en obstetricia."
+        },
+        {
+          "titulo": "Índice de Rotación",
+          "descripcion": "Cantidad de pacientes atendidos por cama disponible."
+        }
       ]
     }
   ]
