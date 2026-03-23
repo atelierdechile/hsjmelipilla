@@ -17,20 +17,15 @@
 
 <body class="app">
 
-<!-- ========================= -->
 <!-- AUTH -->
-<!-- ========================= -->
 <script src="js/auth.js"></script>
 <script>
   initProtectedPage();
 </script>
 
-
 <div class="layout">
 
-  <!-- ========================= -->
   <!-- SIDEBAR -->
-  <!-- ========================= -->
   <aside class="sidebar">
 
     <div>
@@ -38,9 +33,14 @@
 
       <ul class="menu" id="menu">
         <li data-page="dashboard.html">📊 Dashboard</li>
+
+        <!-- 🔥 NUEVO REM -->
+        <li data-page="rem.html">📑 REM</li>
+
         <li data-page="camas.html">🛏️ Camas</li>
         <li data-page="indicadores.html">📈 Indicadores</li>
         <li data-page="configuracion.html">⚙️ Configuración</li>
+
         <li class="logout" onclick="logout()">🚪 Salir</li>
       </ul>
     </div>
@@ -49,10 +49,7 @@
 
   </aside>
 
-
-  <!-- ========================= -->
   <!-- MAIN -->
-  <!-- ========================= -->
   <main class="main">
 
     <!-- HEADER -->
@@ -75,7 +72,6 @@
         </select>
       </div>
     </div>
-
 
     <!-- KPIs -->
     <section class="kpis">
@@ -102,7 +98,6 @@
 
     </section>
 
-
     <!-- GRÁFICOS -->
     <section class="grid-2">
 
@@ -121,7 +116,6 @@
       </div>
 
     </section>
-
 
     <!-- SERVICIOS -->
     <section class="grid-2">
@@ -161,16 +155,14 @@
 
 </div>
 
-
+<!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="js/dashboard.js"></script>
-<script>
 
+<script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ========================= */
   /* MENÚ */
-  /* ========================= */
   const menuItems = document.querySelectorAll("#menu li[data-page]");
   const currentPage = window.location.pathname.split("/").pop();
 
@@ -186,27 +178,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  /* ========================= */
   /* USUARIO */
-  /* ========================= */
   const usuario = JSON.parse(localStorage.getItem("auth"));
 
   if (usuario) {
     document.getElementById("usuario").innerText = `👤 ${usuario.username || "Usuario"}`;
   }
 
-  /* ========================= */
   /* FILTROS */
-  /* ========================= */
   document.getElementById("filtroTiempo").addEventListener("change", actualizarDashboard);
   document.getElementById("filtroServicio").addEventListener("change", actualizarDashboard);
 
 });
 
-
-/* ========================= */
 /* KPI ANIMADO */
-/* ========================= */
 function actualizarDashboard() {
 
   const tiempo = document.getElementById("filtroTiempo").value;
@@ -230,25 +215,18 @@ function actualizarDashboard() {
   }, 250);
 }
 
-
-/* ========================= */
 /* HELPER KPI */
-/* ========================= */
 function setKPI(d, o, oc) {
   document.getElementById("kpiDisponibles").innerText = d;
   document.getElementById("kpiOcupadas").innerText = o;
   document.getElementById("kpiOcupacion").innerText = oc;
 }
 
-
-/* ========================= */
 /* LOGOUT */
-/* ========================= */
 function logout() {
   localStorage.removeItem("auth");
   window.location.href = "login.html";
 }
-
 </script>
 
 </body>

@@ -1,0 +1,89 @@
+/* ========================= */
+/* REM PAGE */
+/* ========================= */
+
+.rem-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* SELECT NIVEL */
+#selectorNivel {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* KPIs REM (override suave) */
+.kpis .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpis .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+}
+
+/* COLORES MÁS SUAVES PARA REM */
+.kpi.primary {
+  border-left: 4px solid #3b82f6;
+}
+
+.kpi.green {
+  border-left: 4px solid #10b981;
+}
+
+.kpi.orange {
+  border-left: 4px solid #f59e0b;
+}
+
+.kpi.red {
+  border-left: 4px solid #ef4444;
+}
+
+/* VALORES KPI */
+.kpi h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* CONTENEDOR DE GRÁFICO */
+.chart-container {
+  position: relative;
+  height: 320px;
+}
+
+/* CARD REM */
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+/* GRID SOLO 1 COLUMNA */
+.grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* LOADING STATE (por si quieres usarlo después) */
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+}

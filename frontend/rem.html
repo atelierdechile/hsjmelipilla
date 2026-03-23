@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>REM | Hospital San José</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/rem.css">
+
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="app">
+
+<!-- ========================= -->
+<!-- AUTH -->
+<!-- ========================= -->
+<script src="js/auth.js"></script>
+<script>
+  initProtectedPage();
+</script>
+
+<div class="layout">
+
+  <!-- ========================= -->
+  <!-- SIDEBAR -->
+  <!-- ========================= -->
+  <aside class="sidebar">
+
+    <div>
+      <div class="logo">🏥 Hospital SJ</div>
+
+      <ul class="menu" id="menu">
+        <li data-page="dashboard.html">📊 Dashboard</li>
+        <li data-page="rem.html">📑 REM</li>
+        <li data-page="camas.html">🛏️ Camas</li>
+        <li data-page="indicadores.html">📈 Indicadores</li>
+        <li data-page="configuracion.html">⚙️ Configuración</li>
+        <li class="logout" onclick="logout()">🚪 Salir</li>
+      </ul>
+    </div>
+
+    <div class="user-box" id="usuario"></div>
+
+  </aside>
+
+  <!-- ========================= -->
+  <!-- MAIN -->
+  <!-- ========================= -->
+  <main class="main">
+
+    <!-- HEADER -->
+    <div class="topbar">
+      <div>
+        <h1 class="rem-title">REM - Nivel de Cuidado</h1>
+        <span class="status">● Datos simulados</span>
+      </div>
+
+      <div class="filters">
+        <select id="selectorNivel"></select>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <section class="kpis">
+
+      <div class="card kpi primary">
+        <span>DÍAS CAMA DISPONIBLES</span>
+        <h2 id="camasDisponibles">--</h2>
+      </div>
+
+      <div class="card kpi green">
+        <span>DÍAS CAMA OCUPADOS</span>
+        <h2 id="camaOcupadas">--</h2>
+      </div>
+
+      <div class="card kpi orange">
+        <span>DÍAS DE ESTADA</span>
+        <h2 id="diasEstada">--</h2>
+      </div>
+
+      <div class="card kpi red">
+        <span>ÍNDICE OCUPACIONAL</span>
+        <h2 id="indiceOcupacional">--</h2>
+      </div>
+
+    </section>
+
+    <!-- GRÁFICOS -->
+    <section class="grid-1">
+
+      <div class="card">
+        <h3>📈 Egresos</h3>
+
+        <div class="chart-container">
+          <canvas id="graficoEgresos"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- ========================= -->
+<!-- SCRIPTS -->
+<!-- ========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/rem.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ========================= */
+  /* MENÚ DINÁMICO */
+  /* ========================= */
+  const menuItems = document.querySelectorAll("#menu li[data-page]");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  menuItems.forEach(item => {
+
+    if (item.dataset.page === currentPage) {
+      item.classList.add("active");
+    }
+
+    item.addEventListener("click", () => {
+      window.location.href = item.dataset.page;
+    });
+
+  });
+
+  /* ========================= */
+  /* USUARIO */
+  /* ========================= */
+  const usuario = JSON.parse(localStorage.getItem("auth"));
+
+  if (usuario) {
+    document.getElementById("usuario").innerText =
+      `👤 ${usuario.username || "Usuario"}`;
+  }
+
+});
+
+/* ========================= */
+/* LOGOUT */
+/* ========================= */
+function logout() {
+  localStorage.removeItem("auth");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

@@ -38,3 +38,38 @@ export function createGradient(ctx, color) {
   gradient.addColorStop(1, color.replace("1)", "0)"));
   return gradient;
 }
+function actualizarGrafico(egresos) {
+  const ctx = document.getElementById("graficoEgresos");
+
+  const labels = egresos.map(e => e.mes);
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Altas",
+        data: egresos.map(e => e.altas),
+        backgroundColor: "green"
+      },
+      {
+        label: "Traslados",
+        data: egresos.map(e => e.traslados),
+        backgroundColor: "orange"
+      },
+      {
+        label: "Fallecidos",
+        data: egresos.map(e => e.fallecidos),
+        backgroundColor: "red"
+      }
+    ]
+  };
+
+  if (chart) {
+    chart.destroy();
+  }
+
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: data
+  });
+}

@@ -1,0 +1,49 @@
+{
+  "niveles": [
+    {
+      "codigo": 405,
+      "nombre": "UCI Adulto",
+      "indicadores": {
+        "dias_cama_disponibles": 90,
+        "dias_cama_ocupados": 70,
+        "dias_estada": 5,
+        "indice_ocupacional": 78,
+        "indice_rotacion": 1.2
+      },
+      "egresos": [
+        { "mes": "Ene", "altas": 20, "traslados": 5, "fallecidos": 3 },
+        { "mes": "Feb", "altas": 25, "traslados": 8, "fallecidos": 4 }
+      ]
+    },
+    {
+      "codigo": 406,
+      "nombre": "UTI Adulto",
+      "indicadores": {
+        "dias_cama_disponibles": 80,
+        "dias_cama_ocupados": 60,
+        "dias_estada": 4,
+        "indice_ocupacional": 75,
+        "indice_rotacion": 1.5
+      },
+      "egresos": [
+        { "mes": "Ene", "altas": 30, "traslados": 6, "fallecidos": 2 },
+        { "mes": "Feb", "altas": 35, "traslados": 10, "fallecidos": 3 }
+      ]
+    },
+    {
+      "codigo": 416,
+      "nombre": "Obstetricia",
+      "indicadores": {
+        "dias_cama_disponibles": 100,
+        "dias_cama_ocupados": 85,
+        "dias_estada": 3,
+        "indice_ocupacional": 85,
+        "indice_rotacion": 2.0
+      },
+      "egresos": [
+        { "mes": "Ene", "altas": 50, "traslados": 2, "fallecidos": 1 },
+        { "mes": "Feb", "altas": 60, "traslados": 3, "fallecidos": 1 }
+      ]
+    }
+  ]
+}
