@@ -1,309 +1,655 @@
 let dataGlobal = null;
-let chart = null;
-let donutChart = null;
+let charts = {};
+let animaciones = {};
+let intervalDonut = null;
+let rafPointer = null;
 
-// ===============================
-// INIT
-// ===============================
+let estado = {
+  nivel: null,
+  anio: "",
+  mes: ""
+};
+
+const SELECTORES_ANIMABLES = {
+  kpis: [".kpi", ".card"],
+  glosas: "#contenedorGlosas .glosa-item",
+  resumen: "#resumenIndicadores .resumen-item",
+  chartCards: [
+    "#graficoEgresos",
+    "#graficoDonut",
+    "#graficoLetalidad",
+    "#graficoEstada",
+    "#graficoCamas"
+  ]
+};
+
+// ================= INIT =================
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
-  await cargarData();
-  configurarPDF();
-}
+  mostrarLoader();
+  prepararSuperficies();
+  configurarInteractividadUI();
 
-// ===============================
-// FETCH JSON
-// ===============================
-async function cargarData() {
   try {
-    const res = await fetch("./data/rem.json");
-
-    if (!res.ok) throw new Error("No se pudo cargar rem.json");
-
-    const data = await res.json();
-
-    if (!data?.niveles?.length) {
-      throw new Error("JSON inválido o vacío");
-    }
-
-    dataGlobal = data;
-
-    llenarSelector(data.niveles);
-    actualizarDashboard(data.niveles[0]);
-
-    console.log("✅ REM cargado correctamente");
-
+    await cargarData();
+    configurarFiltros();
+    configurarPDF();
+    requestAnimationFrame(animarEntradaUI);
   } catch (error) {
-    console.error("❌ Error REM:", error);
+    console.error("ERROR GENERAL:", error);
+    mostrarErrorPantalla(error);
+  } finally {
+    ocultarLoader();
   }
+
+  setTimeout(ocultarLoader, 4000);
 }
 
-// ===============================
-// SELECT
-// ===============================
+// ================= ANIMACIÓN =================
+function animarEntradaUI() {
+  document.querySelectorAll(".card, .kpi").forEach((el, i) => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(20px)";
+    el.classList.remove("is-visible");
+
+    setTimeout(() => {
+      el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+      el.classList.add("is-visible");
+    }, i * 80);
+  });
+}
+
+function animarActualizacionUI() {
+  animarBloquesPrincipales();
+  revelarItems("#contenedorGlosas .glosa-item", 85);
+  revelarItems("#resumenIndicadores .resumen-item", 70);
+}
+
+function animarBloquesPrincipales() {
+  const elementos = [];
+
+  document.querySelectorAll(".kpi").forEach((el) => elementos.push(el));
+
+  SELECTORES_ANIMABLES.chartCards.forEach((selector) => {
+    const card = document.querySelector(selector)?.closest(".card");
+    if (card) elementos.push(card);
+  });
+
+  const glosasCard = document.getElementById("contenedorGlosas")?.closest(".card, .glosas");
+  const resumenCard = document.getElementById("resumenIndicadores")?.closest(".card");
+
+  if (glosasCard) elementos.push(glosasCard);
+  if (resumenCard) elementos.push(resumenCard);
+
+  elementos.forEach((el, i) => dispararReveal(el, i * 55));
+}
+
+function revelarItems(selector, paso = 80) {
+  document.querySelectorAll(selector).forEach((el, i) => {
+    el.style.setProperty("--stagger-index", i);
+    dispararReveal(el, i * paso);
+  });
+}
+
+function dispararReveal(el, delay = 0) {
+  if (!el) return;
+
+  el.classList.remove("is-visible");
+  el.style.opacity = "0";
+  el.style.transform = "translateY(16px)";
+  clearTimeout(el._revealTimeout);
+
+  el._revealTimeout = setTimeout(() => {
+    el.style.transition = "opacity 0.45s ease, transform 0.45s ease";
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+    el.classList.add("is-visible");
+  }, delay);
+}
+
+// ================= LOADER =================
+function mostrarLoader() {
+  document.getElementById("loader")?.classList.remove("hidden");
+}
+
+function ocultarLoader() {
+  document.getElementById("loader")?.classList.add("hidden");
+}
+
+// ================= DATA =================
+async function cargarData() {
+  const res = await fetch("./data/rem.json");
+  if (!res.ok) throw new Error("No se pudo cargar rem.json");
+
+  dataGlobal = await res.json();
+
+  llenarSelector(dataGlobal.niveles);
+  llenarAnios(dataGlobal.niveles);
+
+  estado.nivel = dataGlobal.niveles[0];
+
+  actualizarDashboard();
+}
+
+// ================= FILTROS =================
+function configurarFiltros() {
+  document.getElementById("selectorMes")?.addEventListener("change", (e) => {
+    estado.mes = e.target.value;
+    actualizarDashboard();
+  });
+
+  document.getElementById("selectorAnio")?.addEventListener("change", (e) => {
+    estado.anio = e.target.value;
+    actualizarDashboard();
+  });
+}
+
+// ================= SELECT =================
 function llenarSelector(niveles) {
   const selector = document.getElementById("selectorNivel");
   if (!selector) return;
 
-  selector.innerHTML = "";
+  selector.innerHTML = niveles
+    .map((n) => `<option value="${n.codigo}">${n.nombre}</option>`)
+    .join("");
 
-  niveles.forEach(({ codigo, nombre }) => {
-    const option = document.createElement("option");
-    option.value = codigo;
-    option.textContent = nombre;
-    selector.appendChild(option);
+  selector.addEventListener("change", (e) => {
+    estado.nivel = niveles.find((n) => n.codigo == e.target.value);
+    actualizarDashboard();
   });
-
-  selector.addEventListener("change", manejarCambioNivel);
 }
 
-function manejarCambioNivel(e) {
-  const codigo = Number(e.target.value);
-  const nivel = dataGlobal.niveles.find(n => n.codigo === codigo);
-  if (!nivel) return;
+// ================= AÑOS =================
+function llenarAnios(niveles) {
+  const selector = document.getElementById("selectorAnio");
+  if (!selector) return;
 
-  actualizarDashboard(nivel);
+  const anios = new Set();
+
+  niveles.forEach((n) =>
+    n.egresos.forEach((e) => anios.add(e.mes.split("-")[0]))
+  );
+
+  selector.innerHTML =
+    `<option value="">Todos</option>` +
+    [...anios]
+      .sort()
+      .map((a) => `<option value="${a}">${a}</option>`)
+      .join("");
 }
 
-// ===============================
-// DASHBOARD
-// ===============================
-function actualizarDashboard(nivel) {
-  if (!nivel?.indicadores) return;
+// ================= FILTRO =================
+function filtrarEgresos(egresos) {
+  return egresos.filter((e) => {
+    const [anio, mes] = e.mes.split("-");
+    if (estado.anio && anio !== estado.anio) return false;
+    if (estado.mes && mes !== estado.mes) return false;
+    return true;
+  });
+}
 
+// ================= DASHBOARD =================
+function actualizarDashboard() {
+  const nivel = estado.nivel;
+  if (!nivel || !dataGlobal) return;
+
+  const egresos = filtrarEgresos(nivel.egresos);
   const i = nivel.indicadores;
 
-  // KPIs con animación
   animarNumero("camasDisponibles", i.dias_cama_disponibles);
   animarNumero("camaOcupadas", i.dias_cama_ocupados);
   animarNumero("diasEstada", i.dias_estada);
   animarNumero("indiceOcupacional", i.indice_ocupacional, "%");
 
   actualizarNivelCuidado(nivel.nivel_cuidado);
-  actualizarGrafico(nivel.egresos || []);
-  actualizarGlosas(nivel.glosas || []);
-
-  if (i.dias_cama_disponibles && i.dias_cama_ocupados !== undefined) {
-    const ocupados = i.dias_cama_ocupados;
-    const libres = i.dias_cama_disponibles - i.dias_cama_ocupados;
-    const porcentaje = (ocupados / i.dias_cama_disponibles) * 100;
-    
-    actualizarDonut(ocupados, libres, porcentaje);
-  }
-
-  // RESUMEN (CONECTADO AL JSON REAL)
-  renderResumen(nivel.resumen);
+  actualizarGraficos(nivel, egresos);
+  actualizarGlosas(dataGlobal.glosas_base, nivel, egresos);
+  renderResumen(nivel.resumen, egresos);
+  prepararSuperficies();
+  configurarInteractividadUI();
+  requestAnimationFrame(animarActualizacionUI);
 }
 
-// ===============================
-// ANIMACIÓN NÚMEROS
-// ===============================
+// ================= KPI =================
 function animarNumero(id, valor, sufijo = "") {
+  if (animaciones[id]) clearInterval(animaciones[id]);
+
   const el = document.getElementById(id);
   if (!el) return;
 
+  const numero = Number(valor) || 0;
   let actual = 0;
-  const duracion = 600;
-  const incremento = valor / (duracion / 16);
+  const step = numero / 40;
 
-  const anim = setInterval(() => {
-    actual += incremento;
+  el.classList.remove("is-visible");
+  el.style.transform = "translateY(8px) scale(0.98)";
+  el.style.opacity = "0.75";
 
-    if (actual >= valor) {
-      actual = valor;
-      clearInterval(anim);
+  animaciones[id] = setInterval(() => {
+    actual += step || numero;
+    if (actual >= numero) {
+      actual = numero;
+      clearInterval(animaciones[id]);
+      el.classList.add("is-visible");
+      el.style.transform = "";
+      el.style.opacity = "";
     }
-
-    const formateado = Number.isInteger(valor) ? Math.round(actual) : actual.toFixed(1);
-    el.textContent = formateado + sufijo;
+    el.textContent = formatearValor(actual, sufijo);
   }, 16);
 }
 
-// ===============================
-// NIVEL CUIDADO
-// ===============================
+// sdfdf================= NIVEL =================
 function actualizarNivelCuidado(nivel) {
   const el = document.getElementById("nivelCuidado");
   if (!el || !nivel) return;
 
-  el.textContent = nivel.tipo;
-  el.className = "nivel-cuidado " + nivel.color;
+  el.textContent = nivel.tipo || "Sin nivel";
+  el.className = "nivel-cuidado " + (nivel.color || "primary");
+  dispararReveal(el.closest(".kpi, .card") || el, 80);
 }
 
-// ===============================
-// GRÁFICO BARRAS
-// ===============================
-function actualizarGrafico(egresos) {
-  const canvas = document.getElementById("graficoEgresos");
-  if (!canvas || typeof Chart === "undefined") return;
+// ================= CHART =================
+function crearGrafico(id, tipo, labels, datasets, extra = {}) {
+  const ctx = document.getElementById("grafico" + capitalizar(id));
+  if (!ctx) return;
 
-  const data = {
-    labels: egresos.map(e => e.mes),
-    datasets: [
-      {
-        label: "Altas",
-        data: egresos.map(e => e.altas),
-        backgroundColor: "#22c55e"
-      },
-      {
-        label: "Traslados",
-        data: egresos.map(e => e.traslados),
-        backgroundColor: "#3b82f6"
-      },
-      {
-        label: "Fallecidos",
-        data: egresos.map(e => e.fallecidos),
-        backgroundColor: "#ef4444"
-      }
-    ]
-  };
+  if (charts[id]) charts[id].destroy();
 
-  if (chart) {
-    chart.data = data;
-    chart.update();
-    return;
-  }
+  const esDonut = tipo === "doughnut";
+  const esLinea = tipo === "line";
+  const esBarra = tipo === "bar";
 
-  chart = new Chart(canvas, {
-    type: "bar",
-    data,
+  charts[id] = new Chart(ctx, {
+    type: tipo,
+    data: { labels, datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: { position: "bottom" }
+      interaction: {
+        mode: esDonut ? "nearest" : "index",
+        intersect: false
       },
-      scales: {
-        x: { stacked: true },
-        y: { stacked: true }
-      }
-    }
-  });
-}
-
-// ===============================
-// GRÁFICO DONUT
-// ===============================
-function actualizarDonut(ocupados, libres, porcentaje) {
-  const canvas = document.getElementById("graficoDonut");
-  if (!canvas || typeof Chart === "undefined") return;
-
-  const text = document.getElementById("donutValor");
-  if (text) text.textContent = porcentaje.toFixed(1) + "%"; 
-
-  const data = {
-    labels: ["Días Ocupados", "Días Libres"],
-    datasets: [{
-      data: [ocupados, libres],
-      backgroundColor: ["#3b82f6", "#e5e7eb"],
-      borderWidth: 0
-    }]
-  };
-
-  if (donutChart) {
-    donutChart.data = data;
-    donutChart.update();
-    return;
-  }
-
-  donutChart = new Chart(canvas, {
-    type: "doughnut",
-    data,
-    options: {
-      cutout: "70%",
-      plugins: { 
-        legend: { 
-          display: true,
-          position: "bottom" 
+      layout: {
+        padding: esDonut ? 0 : 8
+      },
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            usePointStyle: true,
+            pointStyle: "circle",
+            padding: 16,
+            boxWidth: 10
+          }
         },
         tooltip: {
-          callbacks: {
-            label: function(context) {
-              return " " + context.label + ": " + context.raw + " días";
-            }
-          }
+          backgroundColor: "rgba(15, 23, 42, 0.92)",
+          titleColor: "#ffffff",
+          bodyColor: "#e5e7eb",
+          padding: 12,
+          cornerRadius: 12,
+          displayColors: true
         }
       },
-      animation: { animateRotate: true }
+      animation: {
+        duration: 1000,
+        easing: "easeOutQuart",
+        delay(context) {
+          if (context.type !== "data" || context.mode !== "default") return 0;
+          return context.dataIndex * (esBarra ? 80 : 45);
+        }
+      },
+      elements: {
+        line: {
+          tension: 0.35,
+          borderWidth: esLinea ? 3 : 2
+        },
+        point: {
+          radius: esLinea ? 4 : 0,
+          hoverRadius: esLinea ? 6 : 0,
+          borderWidth: esLinea ? 2 : 0,
+          backgroundColor: esLinea ? "#ffffff" : undefined
+        },
+        arc: {
+          borderWidth: 0,
+          hoverOffset: esDonut ? 10 : 0
+        },
+        bar: {
+          borderRadius: esBarra ? 10 : 0,
+          borderSkipped: false
+        }
+      },
+      scales: esDonut
+        ? {}
+        : {
+            x: {
+              grid: { display: false },
+              ticks: {
+                color: "#64748b"
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: "rgba(148, 163, 184, 0.22)"
+              },
+              ticks: {
+                color: "#64748b"
+              }
+            }
+          },
+      ...extra
     }
   });
+
+  const card = ctx.closest(".card");
+  if (card) {
+    card.classList.add("chart-card");
+    dispararReveal(card, 60);
+  }
 }
 
-// ===============================
-// RESUMEN (CONECTADO AL JSON)
-// ===============================
-function renderResumen(resumen) {
-  const cont = document.getElementById("resumenIndicadores");
-  if (!cont || !resumen) return;
+function capitalizar(t) {
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
 
-  cont.innerHTML = "";
+// ================= GRAFICOS =================
+function actualizarGraficos(nivel, egresos) {
+  const labels = egresos.map((e) => formatearMes(e.mes));
 
-  const maxEgresos = 1600;
-  const maxCamas = 150;
-  const maxEstada = 15;
-  const maxTraslados = 500;
+  crearGrafico("egresos", "bar", labels, [
+    {
+      label: "Altas",
+      data: egresos.map((e) => e.altas),
+      backgroundColor: "#22c55e"
+    },
+    {
+      label: "Traslados",
+      data: egresos.map((e) => e.traslados),
+      backgroundColor: "#3b82f6"
+    },
+    {
+      label: "Fallecidos",
+      data: egresos.map((e) => e.fallecidos),
+      backgroundColor: "#ef4444"
+    }
+  ]);
 
-  const data = [
-    { label: "Tasa Letalidad", valor: resumen.letalidad + "%", porcentaje: Math.min(resumen.letalidad, 100), color: "red" },
-    { label: "Total Egresos", valor: resumen.egresos_total, porcentaje: Math.min((resumen.egresos_total / maxEgresos) * 100, 100), color: "blue" },
-    { label: "Promedio Camas", valor: resumen.promedio_camas, porcentaje: Math.min((resumen.promedio_camas / maxCamas) * 100, 100), color: "green" },
-    { label: "Promedio Estada", valor: resumen.promedio_estada, porcentaje: Math.min((resumen.promedio_estada / maxEstada) * 100, 100), color: "orange" },
-    { label: "Traslados", valor: resumen.traslados, porcentaje: Math.min((resumen.traslados / maxTraslados) * 100, 100), color: "blue" }
-  ];
+  actualizarDonut(nivel);
+  actualizarGraficoLetalidad(egresos);
+  actualizarGraficoEstada(nivel, egresos);
 
-  data.forEach(item => {
-    const li = document.createElement("li");
-    li.className = "resumen-item";
+  crearGrafico("camas", "bar", ["Disponibles", "Ocupados"], [
+    {
+      label: "Camas",
+      data: [
+        nivel.indicadores.dias_cama_disponibles,
+        nivel.indicadores.dias_cama_ocupados
+      ],
+      backgroundColor: ["#10b981", "#3b82f6"]
+    }
+  ]);
+}
 
-    li.innerHTML = `
-      <div class="resumen-top">
-        <span>${item.label}</span>
-        <strong>${item.valor}</strong>
-      </div>
-      <div class="resumen-bar">
-        <div class="resumen-fill fill-${item.color}"></div>
-      </div>
-    `;
-
-    cont.appendChild(li);
-
-    setTimeout(() => {
-      li.querySelector(".resumen-fill").style.width = item.porcentaje + "%";
-    }, 100);
+function actualizarGraficoLetalidad(egresos) {
+  const labels = egresos.map((e) => formatearMes(e.mes));
+  const data = egresos.map((e) => {
+    const total = (e.altas || 0) + (e.traslados || 0) + (e.fallecidos || 0);
+    return total ? Number(((e.fallecidos / total) * 100).toFixed(1)) : 0;
   });
+
+  crearGrafico("letalidad", "line", labels, [
+    {
+      label: "Letalidad %",
+      data,
+      borderColor: "#ef4444",
+      backgroundColor: "rgba(239, 68, 68, 0.15)",
+      tension: 0.35,
+      fill: true
+    }
+  ]);
 }
 
-// ===============================
-// GLOSAS
-// ===============================
-function actualizarGlosas(glosas) {
+function actualizarGraficoEstada(nivel, egresos) {
+  const labels = egresos.map((e) => formatearMes(e.mes));
+  const promedio = Number(nivel?.resumen?.promedio_estada) || 0;
+  const data = egresos.map(() => promedio);
+
+  crearGrafico("estada", "line", labels, [
+    {
+      label: "Promedio días de estada",
+      data,
+      borderColor: "#8b5cf6",
+      backgroundColor: "rgba(139, 92, 246, 0.15)",
+      tension: 0.35,
+      fill: true
+    }
+  ]);
+}
+
+// ================= DONUT =================
+function actualizarDonut(nivel) {
+  if (intervalDonut) clearInterval(intervalDonut);
+
+  const ocupados = Number(nivel.indicadores.dias_cama_ocupados) || 0;
+  const total = Number(nivel.indicadores.dias_cama_disponibles) || 0;
+  const libres = Math.max(total - ocupados, 0);
+  const porcentaje = total > 0 ? (ocupados / total) * 100 : 0;
+
+  animarDonutTexto("donutValor", porcentaje);
+
+  crearGrafico(
+    "donut",
+    "doughnut",
+    ["Ocupados", "Libres"],
+    [
+      {
+        data: [ocupados, libres],
+        backgroundColor: ["#ef4444", "#e5e7eb"],
+        borderWidth: 0
+      }
+    ],
+    {
+      cutout: "70%",
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  );
+}
+
+// ================= DONUT TEXTO =================
+function animarDonutTexto(id, valor) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  let actual = 0;
+  const numero = Number(valor) || 0;
+  const step = numero / 30;
+
+  el.classList.remove("is-visible");
+  el.style.transform = "scale(0.9)";
+  el.style.opacity = "0.5";
+
+  intervalDonut = setInterval(() => {
+    actual += step || numero;
+    if (actual >= numero) {
+      actual = numero;
+      clearInterval(intervalDonut);
+      el.classList.add("is-visible");
+      el.style.transform = "";
+      el.style.opacity = "";
+    }
+    el.textContent = actual.toFixed(1) + "%";
+  }, 16);
+}
+
+// ================= GLOSAS =================
+function obtenerValorGlosa(nivel, titulo, egresosFiltrados = nivel.egresos) {
+  const totalFallecidos = (egresosFiltrados || []).reduce(
+    (acc, item) => acc + (item.fallecidos || 0),
+    0
+  );
+
+  const totalEgresos = (egresosFiltrados || []).reduce(
+    (acc, item) => acc + (item.altas || 0) + (item.traslados || 0) + (item.fallecidos || 0),
+    0
+  );
+
+  const totalTraslados = (egresosFiltrados || []).reduce(
+    (acc, item) => acc + (item.traslados || 0),
+    0
+  );
+
+  const letalidadCalculada = totalEgresos
+    ? Number(((totalFallecidos / totalEgresos) * 100).toFixed(1))
+    : Number(nivel?.resumen?.letalidad || 0);
+
+  const map = {
+    "Días Cama Disponibles": nivel.indicadores.dias_cama_disponibles,
+    "Días Cama Ocupados": nivel.indicadores.dias_cama_ocupados,
+    "Días de Estada": nivel.indicadores.dias_estada,
+    "Índice Ocupacional": nivel.indicadores.indice_ocupacional + "%",
+    "Índice de Rotación": nivel.indicadores.indice_rotacion,
+    Letalidad: letalidadCalculada + "%",
+    "Número de Egresos": totalEgresos || nivel.resumen.egresos_total,
+    "Promedio Cama Disponibles": nivel.resumen.promedio_camas,
+    "Promedio Días de Estada": nivel.resumen.promedio_estada,
+    Traslados: totalTraslados || nivel.resumen.traslados,
+    "Egresos Fallecidos": totalFallecidos
+  };
+
+  return map[titulo] ?? "-";
+}
+
+function actualizarGlosas(glosasBase, nivel, egresosFiltrados) {
   const contenedor = document.getElementById("contenedorGlosas");
   if (!contenedor) return;
 
-  contenedor.innerHTML = "";
-
-  if (!glosas.length) {
-    contenedor.innerHTML = `<p class="placeholder">Sin información disponible</p>`;
+  if (!Array.isArray(glosasBase) || glosasBase.length === 0) {
+    contenedor.innerHTML = `<p class="empty-state glosa-item">No hay glosas disponibles.</p>`;
+    revelarItems("#contenedorGlosas .glosa-item", 60);
     return;
   }
 
-  glosas.forEach(({ titulo, descripcion }) => {
-    const div = document.createElement("div");
-    div.className = "glosa-item";
+  contenedor.innerHTML = glosasBase
+    .map((glosa, index) => {
+      const valor = obtenerValorGlosa(nivel, glosa.titulo, egresosFiltrados);
 
-    div.innerHTML = `
-      <h4>${titulo}</h4>
-      <p>${descripcion}</p>
-    `;
+      return `
+        <article class="glosa-item" style="--stagger-index:${index}">
+          <div class="glosa-item__header">
+            <h4>${glosa.titulo}</h4>
+            <span class="glosa-item__valor">${formatearValor(valor)}</span>
+          </div>
+          <p>${glosa.descripcion}</p>
+        </article>
+      `;
+    })
+    .join("");
 
-    contenedor.appendChild(div);
+  revelarItems("#contenedorGlosas .glosa-item", 90);
+}
+
+// ================= RESUMEN =================
+function renderResumen(resumen, egresosFiltrados) {
+  const contenedor = document.getElementById("resumenIndicadores");
+  if (!contenedor || !resumen) return;
+
+  const totalFallecidos = (egresosFiltrados || []).reduce(
+    (acc, item) => acc + (item.fallecidos || 0),
+    0
+  );
+
+  const totalEgresos = (egresosFiltrados || []).reduce(
+    (acc, item) => acc + (item.altas || 0) + (item.traslados || 0) + (item.fallecidos || 0),
+    0
+  );
+
+  const resumenItems = [
+    ["Letalidad", `${resumen.letalidad}%`],
+    ["Egresos totales", totalEgresos || resumen.egresos_total],
+    ["Promedio camas", resumen.promedio_camas],
+    ["Promedio estada", resumen.promedio_estada],
+    ["Traslados", resumen.traslados],
+    ["Fallecidos", totalFallecidos]
+  ];
+
+  contenedor.innerHTML = resumenItems
+    .map(
+      ([label, value], index) => `
+        <div class="resumen-item" style="--stagger-index:${index}">
+          <span>${label}</span>
+          <strong>${formatearValor(value)}</strong>
+        </div>
+      `
+    )
+    .join("");
+
+  revelarItems("#resumenIndicadores .resumen-item", 75);
+}
+
+// ================= UI INTERACTIVA =================
+function prepararSuperficies() {
+  document.querySelectorAll(".kpi").forEach((el) => {
+    el.classList.add("interactive-surface");
+  });
+
+  SELECTORES_ANIMABLES.chartCards.forEach((selector) => {
+    const card = document.querySelector(selector)?.closest(".card");
+    if (card) {
+      card.classList.add("interactive-surface", "chart-card");
+    }
+  });
+
+  const glosas = document.getElementById("contenedorGlosas")?.closest(".card, .glosas");
+  const resumen = document.getElementById("resumenIndicadores")?.closest(".card");
+
+  if (glosas) glosas.classList.add("interactive-surface");
+  if (resumen) resumen.classList.add("interactive-surface");
+}
+
+function configurarInteractividadUI() {
+  document.querySelectorAll(".interactive-surface").forEach((el) => {
+    if (el.dataset.interactiveReady === "true") return;
+
+    el.dataset.interactiveReady = "true";
+
+    el.addEventListener("mouseenter", () => {
+      el.classList.add("is-hovered");
+    });
+
+    el.addEventListener("mouseleave", () => {
+      el.classList.remove("is-hovered");
+      el.style.removeProperty("transform");
+      el.style.removeProperty("--pointer-x");
+      el.style.removeProperty("--pointer-y");
+    });
+
+    el.addEventListener("mousemove", (event) => {
+      if (rafPointer) cancelAnimationFrame(rafPointer);
+
+      rafPointer = requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const rotateX = ((y / rect.height) - 0.5) * -5;
+        const rotateY = ((x / rect.width) - 0.5) * 5;
+
+        el.style.setProperty("--pointer-x", `${x}px`);
+        el.style.setProperty("--pointer-y", `${y}px`);
+        el.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px)`;
+      });
+    });
   });
 }
 
-// ===============================
-// PDF PRO
-// ===============================
+// ================= PDF =================
 function configurarPDF() {
   const btn = document.getElementById("btnExportarPDF");
   if (!btn) return;
@@ -312,36 +658,88 @@ function configurarPDF() {
 }
 
 async function exportarPDF() {
-  const { jsPDF } = window.jspdf;
   const contenido = document.getElementById("contenidoPDF");
+  if (!contenido || !window.html2canvas || !window.jspdf) return;
 
-  if (!contenido) return;
-
-  const btn = document.getElementById("btnExportarPDF");
-
-  btn.textContent = "⏳ Generando...";
-  btn.disabled = true;
-
-  contenido.classList.add("loading");
+  mostrarLoader();
 
   try {
-    const canvas = await html2canvas(contenido, { scale: 2 });
+    const canvas = await html2canvas(contenido, {
+      scale: 1.5,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    });
+
     const imgData = canvas.toDataURL("image/png");
+    const { jsPDF } = window.jspdf;
     const pdf = new jsPDF("p", "mm", "a4");
 
-    const width = pdf.internal.pageSize.getWidth();
-    const height = (canvas.height * width) / canvas.width;
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = pageWidth - 10;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, width, height);
+    let heightLeft = imgHeight;
+    let position = 5;
 
-    const fecha = new Date().toISOString().slice(0, 10);
-    pdf.save(`REM_${fecha}.pdf`);
+    pdf.addImage(imgData, "PNG", 5, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight - 10;
 
-  } catch (err) {
-    console.error("❌ Error PDF:", err);
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight + 5;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 5, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight - 10;
+    }
+
+    pdf.save("rem-hospital-san-jose.pdf");
+  } catch (error) {
+    console.error("Error al exportar PDF:", error);
+  } finally {
+    ocultarLoader();
   }
+}
 
-  contenido.classList.remove("loading");
-  btn.textContent = "📄 Exportar PDF";
-  btn.disabled = false;
+// ================= ERROR UI =================
+function mostrarErrorPantalla(error) {
+  const contenedor = document.getElementById("contenedorGlosas");
+  if (!contenedor) return;
+
+  contenedor.innerHTML = `
+    <article class="glosa-item is-visible">
+      <div class="glosa-item__header">
+        <h4>Error al cargar REM</h4>
+        <span class="glosa-item__valor">!</span>
+      </div>
+      <p>${error?.message || "Ocurrió un problema inesperado al cargar la información."}</p>
+    </article>
+  `;
+}
+
+// ================= HELPERS =================
+function formatearMes(valor) {
+  if (!valor || typeof valor !== "string" || !valor.includes("-")) return valor;
+
+  const [anio, mes] = valor.split("-");
+  const fecha = new Date(Number(anio), Number(mes) - 1, 1);
+
+  return fecha.toLocaleDateString("es-CL", {
+    month: "short",
+    year: "numeric"
+  });
+}
+
+function formatearValor(valor, sufijo = "") {
+  if (typeof valor === "string") return valor;
+
+  const numero = Number(valor);
+  if (Number.isNaN(numero)) return String(valor ?? "-");
+
+  const tieneDecimales = !Number.isInteger(numero);
+  return (
+    numero.toLocaleString("es-CL", {
+      minimumFractionDigits: tieneDecimales ? 1 : 0,
+      maximumFractionDigits: tieneDecimales ? 1 : 0
+    }) + sufijo
+  );
 }
