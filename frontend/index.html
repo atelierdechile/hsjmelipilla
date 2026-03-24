@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hospital San José | Sistema Clínico</title>
+
+  <!-- SEO básico -->
+  <meta name="description" content="Plataforma hospitalaria para gestión de camas e indicadores clínicos en tiempo real.">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+
+<body class="landing">
+
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
+<section class="hero">
+
+  <div class="overlay">
+
+    <div class="container">
+
+      <div class="landing-content">
+
+        <h1>
+          Gestión hospitalaria en tiempo real
+        </h1>
+
+        <p>
+          Plataforma clínica para monitoreo de camas, indicadores y optimización
+          de procesos asistenciales en el Hospital San José de Melipilla.
+        </p>
+
+        <!-- CTA PRINCIPAL -->
+        <div class="buttons">
+          <a href="login.html" class="btn primary">Acceder al sistema</a>
+        </div>
+
+        <!-- STATS -->
+        <div class="hero-stats">
+          <div>
+            <h3>+450</h3>
+            <span>Camas</span>
+          </div>
+          <div>
+            <h3>85%</h3>
+            <span>Ocupación</span>
+          </div>
+          <div>
+            <h3>24/7</h3>
+            <span>Monitoreo</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- FEATURES -->
+<!-- ========================= -->
+<section class="features">
+
+  <div class="container features-grid">
+
+    <div class="feature-card">
+      <h3>📊 Visualización en tiempo real</h3>
+      <p>
+        Indicadores clínicos críticos disponibles de forma inmediata para decisiones oportunas.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <h3>🛏️ Gestión de camas</h3>
+      <p>
+        Control completo de ocupación hospitalaria, disponibilidad y rotación.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <h3>⚡ Eficiencia operativa</h3>
+      <p>
+        Reducción de tiempos de espera y mejora continua de procesos asistenciales.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- CTA -->
+<!-- ========================= -->
+<section class="cta">
+
+  <div class="container">
+
+    <h2>Acceso seguro para personal autorizado</h2>
+
+    <p>
+      Plataforma interna con monitoreo continuo y soporte en tiempo real.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- FOOTER -->
+<!-- ========================= -->
+<footer class="footer">
+
+  <div class="container">
+    <p>© 2026 Hospital San José de Melipilla</p>
+  </div>
+
+</footer>
+
+
+<!-- ========================= -->
+<!-- JS -->
+<!-- ========================= -->
+
+<!-- PARALLAX SUAVE -->
+<script>
+  const hero = document.querySelector(".hero");
+
+  window.addEventListener("scroll", () => {
+    let scroll = window.scrollY;
+    hero.style.backgroundPosition = `center ${scroll * 0.4}px`;
+  });
+</script>
+
+<!-- ANIMACIÓN AL HACER SCROLL -->
+<script>
+  const elements = document.querySelectorAll(".feature-card, .cta");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = "translateY(0)";
+      }
+    });
+  });
+
+  elements.forEach(el => {
+    el.style.opacity = 0;
+    el.style.transform = "translateY(40px)";
+    el.style.transition = "all 0.8s ease";
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

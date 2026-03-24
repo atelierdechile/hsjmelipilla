@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Acceso | Hospital San José</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+  <!-- ========================= -->
+  <!-- HERO -->
+  <!-- ========================= -->
+  <div class="login-hero">
+    <div class="hero-content">
+      <h1>🏥 Hospital San José</h1>
+
+      <p>
+        Plataforma de gestión hospitalaria en tiempo real para monitoreo de camas,
+        indicadores clínicos y optimización de procesos asistenciales.
+      </p>
+
+      <div class="hero-stats">
+        <div>
+          <h3>+450</h3>
+          <span>Camas</span>
+        </div>
+        <div>
+          <h3>85%</h3>
+          <span>Ocupación</span>
+        </div>
+        <div>
+          <h3>24/7</h3>
+          <span>Monitoreo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- LOGIN -->
+  <!-- ========================= -->
+  <div class="login-container">
+
+    <div class="login-box">
+
+      <h2>Acceso al sistema</h2>
+      <p class="subtitle">Ingresa tus credenciales institucionales</p>
+
+      <!-- 🔥 FORM (MEJOR UX) -->
+      <form onsubmit="login(); return false;">
+
+        <input type="text" id="user" placeholder="Usuario" required>
+        <input type="password" id="pass" placeholder="Contraseña" required>
+
+        <button id="btn-login" type="submit">Ingresar</button>
+
+      </form>
+
+      <p id="error" class="error"></p>
+
+      <!-- ========================= -->
+      <!-- MODO PRUEBA -->
+      <!-- ========================= -->
+      <div class="quick-access">
+        <span>Modo prueba:</span>
+
+        <button type="button" onclick="demoLogin('admin')">
+          👑 Admin
+        </button>
+
+        <button type="button" onclick="demoLogin('medico')">
+          🩺 Doctor
+        </button>
+      </div>
+
+      <!-- ========================= -->
+      <!-- BOTÓN VOLVER (FIX UX) -->
+      <!-- ========================= -->
+      <button class="btn-back" onclick="window.location.href='index.html'">
+        ← Volver al inicio
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- JS -->
+<!-- ========================= -->
+<script src="js/auth.js"></script>
+
+</body>
+</html>

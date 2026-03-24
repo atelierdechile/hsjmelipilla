@@ -1,0 +1,107 @@
+{
+  "niveles": [
+    {
+      "codigo": 0,
+      "nombre": "Total Establecimiento",
+      "nivel_cuidado": {
+        "tipo": "Global",
+        "color": "primary"
+      },
+      "indicadores": {
+        "dias_cama_disponibles": 50727,
+        "dias_cama_ocupados": 43325,
+        "dias_estada": 41056,
+        "indice_ocupacional": 85.4,
+        "indice_rotacion": 5.4
+      },
+      "resumen": {
+        "letalidad": 2.5,
+        "egresos_total": 7531,
+        "promedio_camas": 139.0,
+        "promedio_estada": 5.5,
+        "traslados": 660
+      },
+      "egresos": [
+        { "mes": "Ene", "altas": 518, "traslados": 66, "fallecidos": 16 },
+        { "mes": "Feb", "altas": 507, "traslados": 57, "fallecidos": 9 },
+        { "mes": "Mar", "altas": 589, "traslados": 60, "fallecidos": 20 },
+        { "mes": "Abr", "altas": 553, "traslados": 61, "fallecidos": 18 },
+        { "mes": "May", "altas": 541, "traslados": 66, "fallecidos": 21 }
+      ],
+      "glosas": [
+        { "titulo": "Índice Ocupacional", "descripcion": "Porcentaje de camas ocupadas respecto al total disponible." },
+        { "titulo": "Días de Estada", "descripcion": "Promedio de días que un paciente permanece hospitalizado." },
+        { "titulo": "Índice de Rotación", "descripcion": "Cantidad de pacientes atendidos por cama en un periodo." },
+        { "titulo": "Tasa Letalidad", "descripcion": "Proporción de personas que mueren por una enfermedad." },
+        { "titulo": "Tasa Mortalidad", "descripcion": "Proporción de defunciones que se producen en un área." },
+        { "titulo": "Promedio pacientes día", "descripcion": "Número de pacientes promedio que ocupa una cama." }
+      ]
+    },
+    {
+      "codigo": 405,
+      "nombre": "UCI Adulto",
+      "nivel_cuidado": { "tipo": "Crítico", "color": "red" },
+      "indicadores": { "dias_cama_disponibles": 1961, "dias_cama_ocupados": 1306, "dias_estada": 656, "indice_ocupacional": 66.6, "indice_rotacion": 14.9 },
+      "resumen": { "letalidad": 65.0, "egresos_total": 80, "promedio_camas": 5.4, "promedio_estada": 8.2, "traslados": 127 },
+      "egresos": [
+        { "mes": "Ene", "altas": 1, "traslados": 14, "fallecidos": 2 },
+        { "mes": "Feb", "altas": 2, "traslados": 10, "fallecidos": 3 },
+        { "mes": "Mar", "altas": 5, "traslados": 11, "fallecidos": 6 },
+        { "mes": "Abr", "altas": 2, "traslados": 6, "fallecidos": 2 },
+        { "mes": "May", "altas": 4, "traslados": 12, "fallecidos": 7 }
+      ],
+      "glosas": [
+        { "titulo": "Índice Ocupacional", "descripcion": "Porcentaje de camas ocupadas respecto al total disponible." },
+        { "titulo": "Días de Estada", "descripcion": "Promedio de días que un paciente permanece hospitalizado." },
+        { "titulo": "Índice de Rotación", "descripcion": "Cantidad de pacientes atendidos por cama en un periodo." },
+        { "titulo": "Tasa Letalidad", "descripcion": "Proporción de personas que mueren por una enfermedad." },
+        { "titulo": "Tasa Mortalidad", "descripcion": "Proporción de defunciones que se producen en un área." },
+        { "titulo": "Promedio pacientes día", "descripcion": "Número de pacientes promedio que ocupa una cama." }
+      ]
+    },
+    {
+      "codigo": 406,
+      "nombre": "UTI Adulto",
+      "nivel_cuidado": { "tipo": "Intermedio", "color": "orange" },
+      "indicadores": { "dias_cama_disponibles": 4608, "dias_cama_ocupados": 4399, "dias_estada": 2701, "indice_ocupacional": 95.5, "indice_rotacion": 30.9 },
+      "resumen": { "letalidad": 8.95, "egresos_total": 391, "promedio_camas": 12.6, "promedio_estada": 6.9, "traslados": 468 },
+      "egresos": [
+        { "mes": "Ene", "altas": 47, "traslados": 35, "fallecidos": 2 },
+        { "mes": "Feb", "altas": 33, "traslados": 36, "fallecidos": 2 },
+        { "mes": "Mar", "altas": 37, "traslados": 30, "fallecidos": 5 },
+        { "mes": "Abr", "altas": 33, "traslados": 42, "fallecidos": 4 },
+        { "mes": "May", "altas": 24, "traslados": 43, "fallecidos": 4 }
+      ],
+      "glosas": [
+        { "titulo": "Índice Ocupacional", "descripcion": "Porcentaje de camas ocupadas respecto al total disponible." },
+        { "titulo": "Días de Estada", "descripcion": "Promedio de días que un paciente permanece hospitalizado." },
+        { "titulo": "Índice de Rotación", "descripcion": "Cantidad de pacientes atendidos por cama en un periodo." },
+        { "titulo": "Tasa Letalidad", "descripcion": "Proporción de personas que mueren por una enfermedad." },
+        { "titulo": "Tasa Mortalidad", "descripcion": "Proporción de defunciones que se producen en un área." },
+        { "titulo": "Promedio pacientes día", "descripcion": "Número de pacientes promedio que ocupa una cama." }
+      ]
+    },
+    {
+      "codigo": 416,
+      "nombre": "Obstetricia",
+      "nivel_cuidado": { "tipo": "Básico", "color": "green" },
+      "indicadores": { "dias_cama_disponibles": 6535, "dias_cama_ocupados": 4320, "dias_estada": 4352, "indice_ocupacional": 66.1, "indice_rotacion": 84.1 },
+      "resumen": { "letalidad": 0.0, "egresos_total": 1507, "promedio_camas": 17.9, "promedio_estada": 2.9, "traslados": 7 },
+      "egresos": [
+        { "mes": "Ene", "altas": 107, "traslados": 0, "fallecidos": 0 },
+        { "mes": "Feb", "altas": 111, "traslados": 1, "fallecidos": 0 },
+        { "mes": "Mar", "altas": 142, "traslados": 0, "fallecidos": 0 },
+        { "mes": "Abr", "altas": 122, "traslados": 1, "fallecidos": 0 },
+        { "mes": "May", "altas": 111, "traslados": 0, "fallecidos": 0 }
+      ],
+      "glosas": [
+        { "titulo": "Índice Ocupacional", "descripcion": "Porcentaje de camas ocupadas respecto al total disponible." },
+        { "titulo": "Días de Estada", "descripcion": "Promedio de días que un paciente permanece hospitalizado." },
+        { "titulo": "Índice de Rotación", "descripcion": "Cantidad de pacientes atendidos por cama en un periodo." },
+        { "titulo": "Tasa Letalidad", "descripcion": "Proporción de personas que mueren por una enfermedad." },
+        { "titulo": "Tasa Mortalidad", "descripcion": "Proporción de defunciones que se producen en un área." },
+        { "titulo": "Promedio pacientes día", "descripcion": "Número de pacientes promedio que ocupa una cama." }
+      ]
+    }
+  ]
+}
