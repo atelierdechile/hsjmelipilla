@@ -4,7 +4,6 @@
       "codigo": 0,
       "nombre": "Total Establecimiento",
       "nivel_cuidado": { "tipo": "Global", "color": "primary" },
-
       "indicadores": {
         "dias_cama_disponibles": 50727,
         "dias_cama_ocupados": 43325,
@@ -12,7 +11,6 @@
         "indice_ocupacional": 85.4,
         "indice_rotacion": 5.4
       },
-
       "resumen": {
         "letalidad": 2.5,
         "egresos_total": 7531,
@@ -20,21 +18,49 @@
         "promedio_estada": 5.5,
         "traslados": 660
       },
-
       "egresos": [
-        { "mes": "2025-01", "altas": 518, "traslados": 66, "fallecidos": 16 },
-        { "mes": "2025-02", "altas": 507, "traslados": 57, "fallecidos": 9 },
-        { "mes": "2025-03", "altas": 589, "traslados": 60, "fallecidos": 20 },
-        { "mes": "2025-04", "altas": 553, "traslados": 61, "fallecidos": 18 },
-        { "mes": "2025-05", "altas": 541, "traslados": 66, "fallecidos": 21 }
+        { "mes": "2023-01", "altas": 585, "traslados": 30, "fallecidos": 20, "dias_cama_disponibles": 4197, "dias_cama_ocupados": 3221, "dias_estada": 3136 },
+        { "mes": "2023-02", "altas": 496, "traslados": 31, "fallecidos": 12, "dias_cama_disponibles": 3776, "dias_cama_ocupados": 2708, "dias_estada": 2415 },
+        { "mes": "2023-03", "altas": 589, "traslados": 36, "fallecidos": 10, "dias_cama_disponibles": 4210, "dias_cama_ocupados": 3117, "dias_estada": 3214 },
+        { "mes": "2023-04", "altas": 547, "traslados": 32, "fallecidos": 15, "dias_cama_disponibles": 4077, "dias_cama_ocupados": 3164, "dias_estada": 3084 },
+        { "mes": "2023-05", "altas": 629, "traslados": 36, "fallecidos": 17, "dias_cama_disponibles": 4191, "dias_cama_ocupados": 3263, "dias_estada": 3350 },
+        { "mes": "2023-06", "altas": 482, "traslados": 38, "fallecidos": 26, "dias_cama_disponibles": 4052, "dias_cama_ocupados": 3215, "dias_estada": 3579 },
+        { "mes": "2023-07", "altas": 501, "traslados": 25, "fallecidos": 7, "dias_cama_disponibles": 4228, "dias_cama_ocupados": 2697, "dias_estada": 2691 },
+        { "mes": "2023-08", "altas": 567, "traslados": 37, "fallecidos": 11, "dias_cama_disponibles": 4221, "dias_cama_ocupados": 3235, "dias_estada": 3556 },
+        { "mes": "2023-09", "altas": 506, "traslados": 35, "fallecidos": 21, "dias_cama_disponibles": 4040, "dias_cama_ocupados": 3235, "dias_estada": 2996 },
+        { "mes": "2023-10", "altas": 546, "traslados": 32, "fallecidos": 17, "dias_cama_disponibles": 4194, "dias_cama_ocupados": 3425, "dias_estada": 3194 },
+        { "mes": "2023-11", "altas": 549, "traslados": 42, "fallecidos": 16, "dias_cama_disponibles": 4074, "dias_cama_ocupados": 3202, "dias_estada": 3169 },
+        { "mes": "2023-12", "altas": 564, "traslados": 51, "fallecidos": 13, "dias_cama_disponibles": 4222, "dias_cama_ocupados": 3114, "dias_estada": 2908 },
+        { "mes": "2024-01", "altas": 579, "traslados": 28, "fallecidos": 16, "dias_cama_disponibles": 4209, "dias_cama_ocupados": 3320, "dias_estada": 3052 },
+        { "mes": "2024-02", "altas": 585, "traslados": 29, "fallecidos": 21, "dias_cama_disponibles": 3828, "dias_cama_ocupados": 2970, "dias_estada": 3073 },
+        { "mes": "2024-03", "altas": 581, "traslados": 27, "fallecidos": 12, "dias_cama_disponibles": 4091, "dias_cama_ocupados": 3238, "dias_estada": 2868 },
+        { "mes": "2024-04", "altas": 579, "traslados": 36, "fallecidos": 14, "dias_cama_disponibles": 3958, "dias_cama_ocupados": 3175, "dias_estada": 3427 },
+        { "mes": "2024-05", "altas": 535, "traslados": 58, "fallecidos": 25, "dias_cama_disponibles": 4202, "dias_cama_ocupados": 3464, "dias_estada": 3236 },
+        { "mes": "2024-06", "altas": 493, "traslados": 51, "fallecidos": 16, "dias_cama_disponibles": 4156, "dias_cama_ocupados": 3424, "dias_estada": 3886 },
+        { "mes": "2024-07", "altas": 492, "traslados": 68, "fallecidos": 19, "dias_cama_disponibles": 4285, "dias_cama_ocupados": 3383, "dias_estada": 3827 },
+        { "mes": "2024-08", "altas": 613, "traslados": 67, "fallecidos": 18, "dias_cama_disponibles": 4278, "dias_cama_ocupados": 3264, "dias_estada": 3277 },
+        { "mes": "2024-09", "altas": 520, "traslados": 51, "fallecidos": 20, "dias_cama_disponibles": 4108, "dias_cama_ocupados": 3271, "dias_estada": 3504 },
+        { "mes": "2024-10", "altas": 596, "traslados": 59, "fallecidos": 14, "dias_cama_disponibles": 4245, "dias_cama_ocupados": 3313, "dias_estada": 3466 },
+        { "mes": "2024-11", "altas": 563, "traslados": 51, "fallecidos": 15, "dias_cama_disponibles": 4110, "dias_cama_ocupados": 3243, "dias_estada": 3167 },
+        { "mes": "2024-12", "altas": 533, "traslados": 54, "fallecidos": 7, "dias_cama_disponibles": 4247, "dias_cama_ocupados": 3314, "dias_estada": 3218 },
+        { "mes": "2025-01", "altas": 518, "traslados": 66, "fallecidos": 16, "dias_cama_disponibles": 4247, "dias_cama_ocupados": 3362, "dias_estada": 3488 },
+        { "mes": "2025-02", "altas": 507, "traslados": 57, "fallecidos": 9,  "dias_cama_disponibles": 3836, "dias_cama_ocupados": 3183, "dias_estada": 2756 },
+        { "mes": "2025-03", "altas": 589, "traslados": 60, "fallecidos": 20, "dias_cama_disponibles": 4247, "dias_cama_ocupados": 3562, "dias_estada": 3531 },
+        { "mes": "2025-04", "altas": 553, "traslados": 61, "fallecidos": 18, "dias_cama_disponibles": 4110, "dias_cama_ocupados": 3477, "dias_estada": 3327 },
+        { "mes": "2025-05", "altas": 541, "traslados": 66, "fallecidos": 21, "dias_cama_disponibles": 4247, "dias_cama_ocupados": 3581, "dias_estada": 3138 },
+        { "mes": "2025-06", "altas": 550, "traslados": 64, "fallecidos": 13, "dias_cama_disponibles": 4110, "dias_cama_ocupados": 3454, "dias_estada": 3491 },
+        { "mes": "2025-07", "altas": 584, "traslados": 84, "fallecidos": 19, "dias_cama_disponibles": 4250, "dias_cama_ocupados": 3781, "dias_estada": 3540 },
+        { "mes": "2025-08", "altas": 543, "traslados": 75, "fallecidos": 13, "dias_cama_disponibles": 4375, "dias_cama_ocupados": 3694, "dias_estada": 3573 },
+        { "mes": "2025-09", "altas": 481, "traslados": 87, "fallecidos": 11, "dias_cama_disponibles": 4174, "dias_cama_ocupados": 3642, "dias_estada": 3177 },
+        { "mes": "2025-10", "altas": 591, "traslados": 51, "fallecidos": 17, "dias_cama_disponibles": 4420, "dias_cama_ocupados": 3944, "dias_estada": 3349 },
+        { "mes": "2025-11", "altas": 522, "traslados": 69, "fallecidos": 17, "dias_cama_disponibles": 4290, "dias_cama_ocupados": 3805, "dias_estada": 4031 },
+        { "mes": "2025-12", "altas": 554, "traslados": 69, "fallecidos": 15, "dias_cama_disponibles": 4421, "dias_cama_ocupados": 3840, "dias_estada": 3655 }
       ]
     },
-
     {
       "codigo": 405,
       "nombre": "UCI Adulto",
       "nivel_cuidado": { "tipo": "Crítico", "color": "red" },
-
       "indicadores": {
         "dias_cama_disponibles": 1961,
         "dias_cama_ocupados": 1306,
@@ -42,7 +68,6 @@
         "indice_ocupacional": 66.6,
         "indice_rotacion": 14.9
       },
-
       "resumen": {
         "letalidad": 65,
         "egresos_total": 80,
@@ -50,21 +75,37 @@
         "promedio_estada": 8.2,
         "traslados": 127
       },
-
       "egresos": [
-        { "mes": "2025-01", "altas": 1, "traslados": 14, "fallecidos": 2 },
-        { "mes": "2025-02", "altas": 2, "traslados": 10, "fallecidos": 3 },
-        { "mes": "2025-03", "altas": 5, "traslados": 11, "fallecidos": 6 },
-        { "mes": "2025-04", "altas": 2, "traslados": 6, "fallecidos": 2 },
-        { "mes": "2025-05", "altas": 4, "traslados": 12, "fallecidos": 7 }
+        { "mes": "2024-01", "altas": 12, "traslados": 0, "fallecidos": 1, "dias_cama_disponibles": 138, "dias_cama_ocupados": 84, "dias_estada": 59 },
+        { "mes": "2024-02", "altas": 13, "traslados": 6, "fallecidos": 5, "dias_cama_disponibles": 174, "dias_cama_ocupados": 120, "dias_estada": 112 },
+        { "mes": "2024-03", "altas": 9, "traslados": 4, "fallecidos": 6, "dias_cama_disponibles": 186, "dias_cama_ocupados": 121, "dias_estada": 104 },
+        { "mes": "2024-04", "altas": 4, "traslados": 11, "fallecidos": 1, "dias_cama_disponibles": 174, "dias_cama_ocupados": 109, "dias_estada": 40 },
+        { "mes": "2024-05", "altas": 1, "traslados": 11, "fallecidos": 12, "dias_cama_disponibles": 181, "dias_cama_ocupados": 116, "dias_estada": 97 },
+        { "mes": "2024-06", "altas": 7, "traslados": 12, "fallecidos": 4, "dias_cama_disponibles": 179, "dias_cama_ocupados": 99, "dias_estada": 60 },
+        { "mes": "2024-07", "altas": 1, "traslados": 21, "fallecidos": 7, "dias_cama_disponibles": 173, "dias_cama_ocupados": 90, "dias_estada": 63 },
+        { "mes": "2024-08", "altas": 3, "traslados": 12, "fallecidos": 5, "dias_cama_disponibles": 185, "dias_cama_ocupados": 126, "dias_estada": 42 },
+        { "mes": "2024-09", "altas": 3, "traslados": 9, "fallecidos": 6, "dias_cama_disponibles": 178, "dias_cama_ocupados": 132, "dias_estada": 58 },
+        { "mes": "2024-10", "altas": 5, "traslados": 13, "fallecidos": 5, "dias_cama_disponibles": 183, "dias_cama_ocupados": 105, "dias_estada": 89 },
+        { "mes": "2024-11", "altas": 6, "traslados": 10, "fallecidos": 3, "dias_cama_disponibles": 172, "dias_cama_ocupados": 110, "dias_estada": 23 },
+        { "mes": "2024-12", "altas": 2, "traslados": 10, "fallecidos": 3, "dias_cama_disponibles": 184, "dias_cama_ocupados": 144, "dias_estada": 38 },
+        { "mes": "2025-01", "altas": 1, "traslados": 14, "fallecidos": 2, "dias_cama_disponibles": 166, "dias_cama_ocupados": 87, "dias_estada": 6 },
+        { "mes": "2025-02", "altas": 2, "traslados": 10, "fallecidos": 3, "dias_cama_disponibles": 158, "dias_cama_ocupados": 86, "dias_estada": 58 },
+        { "mes": "2025-03", "altas": 5, "traslados": 11, "fallecidos": 6, "dias_cama_disponibles": 166, "dias_cama_ocupados": 88, "dias_estada": 81 },
+        { "mes": "2025-04", "altas": 2, "traslados": 6, "fallecidos": 2, "dias_cama_disponibles": 165, "dias_cama_ocupados": 99, "dias_estada": 29 },
+        { "mes": "2025-05", "altas": 4, "traslados": 12, "fallecidos": 7, "dias_cama_disponibles": 181, "dias_cama_ocupados": 148, "dias_estada": 67 },
+        { "mes": "2025-06", "altas": 4, "traslados": 12, "fallecidos": 5, "dias_cama_disponibles": 171, "dias_cama_ocupados": 117, "dias_estada": 122 },
+        { "mes": "2025-07", "altas": 1, "traslados": 10, "fallecidos": 6, "dias_cama_disponibles": 182, "dias_cama_ocupados": 151, "dias_estada": 59 },
+        { "mes": "2025-08", "altas": 2, "traslados": 14, "fallecidos": 1, "dias_cama_disponibles": 178, "dias_cama_ocupados": 138, "dias_estada": 3 },
+        { "mes": "2025-09", "altas": 2, "traslados": 15, "fallecidos": 5, "dias_cama_disponibles": 159, "dias_cama_ocupados": 129, "dias_estada": 35 },
+        { "mes": "2025-10", "altas": 1, "traslados": 6, "fallecidos": 6, "dias_cama_disponibles": 138, "dias_cama_ocupados": 67, "dias_estada": 72 },
+        { "mes": "2025-11", "altas": 3, "traslados": 10, "fallecidos": 5, "dias_cama_disponibles": 136, "dias_cama_ocupados": 84, "dias_estada": 61 },
+        { "mes": "2025-12", "altas": 1, "traslados": 7, "fallecidos": 4, "dias_cama_disponibles": 161, "dias_cama_ocupados": 112, "dias_estada": 63 }
       ]
     },
-
     {
       "codigo": 406,
       "nombre": "UTI Adulto",
       "nivel_cuidado": { "tipo": "Intermedio", "color": "orange" },
-
       "indicadores": {
         "dias_cama_disponibles": 4608,
         "dias_cama_ocupados": 4399,
@@ -72,7 +113,6 @@
         "indice_ocupacional": 95.5,
         "indice_rotacion": 30.9
       },
-
       "resumen": {
         "letalidad": 8.95,
         "egresos_total": 391,
@@ -80,21 +120,49 @@
         "promedio_estada": 6.9,
         "traslados": 468
       },
-
       "egresos": [
-        { "mes": "2025-01", "altas": 47, "traslados": 35, "fallecidos": 2 },
-        { "mes": "2025-02", "altas": 33, "traslados": 36, "fallecidos": 2 },
-        { "mes": "2025-03", "altas": 37, "traslados": 30, "fallecidos": 5 },
-        { "mes": "2025-04", "altas": 33, "traslados": 42, "fallecidos": 4 },
-        { "mes": "2025-05", "altas": 24, "traslados": 43, "fallecidos": 4 }
+        { "mes": "2023-01", "altas": 34, "traslados": 23, "fallecidos": 6, "dias_cama_disponibles": 558, "dias_cama_ocupados": 380, "dias_estada": 286 },
+        { "mes": "2023-02", "altas": 25, "traslados": 20, "fallecidos": 5, "dias_cama_disponibles": 483, "dias_cama_ocupados": 318, "dias_estada": 141 },
+        { "mes": "2023-03", "altas": 37, "traslados": 24, "fallecidos": 2, "dias_cama_disponibles": 547, "dias_cama_ocupados": 317, "dias_estada": 207 },
+        { "mes": "2023-04", "altas": 41, "traslados": 15, "fallecidos": 6, "dias_cama_disponibles": 540, "dias_cama_ocupados": 383, "dias_estada": 293 },
+        { "mes": "2023-05", "altas": 49, "traslados": 22, "fallecidos": 4, "dias_cama_disponibles": 558, "dias_cama_ocupados": 431, "dias_estada": 291 },
+        { "mes": "2023-06", "altas": 51, "traslados": 18, "fallecidos": 9, "dias_cama_disponibles": 560, "dias_cama_ocupados": 432, "dias_estada": 430 },
+        { "mes": "2023-07", "altas": 46, "traslados": 16, "fallecidos": 3, "dias_cama_disponibles": 679, "dias_cama_ocupados": 434, "dias_estada": 357 },
+        { "mes": "2023-08", "altas": 48, "traslados": 20, "fallecidos": 8, "dias_cama_disponibles": 682, "dias_cama_ocupados": 493, "dias_estada": 435 },
+        { "mes": "2023-09", "altas": 56, "traslados": 22, "fallecidos": 3, "dias_cama_disponibles": 540, "dias_cama_ocupados": 435, "dias_estada": 345 },
+        { "mes": "2023-10", "altas": 41, "traslados": 21, "fallecidos": 8, "dias_cama_disponibles": 554, "dias_cama_ocupados": 441, "dias_estada": 329 },
+        { "mes": "2023-11", "altas": 37, "traslados": 28, "fallecidos": 5, "dias_cama_disponibles": 537, "dias_cama_ocupados": 349, "dias_estada": 337 },
+        { "mes": "2023-12", "altas": 47, "traslados": 32, "fallecidos": 6, "dias_cama_disponibles": 558, "dias_cama_ocupados": 403, "dias_estada": 296 },
+        { "mes": "2024-01", "altas": 37, "traslados": 21, "fallecidos": 3, "dias_cama_disponibles": 420, "dias_cama_ocupados": 331, "dias_estada": 229 },
+        { "mes": "2024-02", "altas": 30, "traslados": 17, "fallecidos": 3, "dias_cama_disponibles": 348, "dias_cama_ocupados": 266, "dias_estada": 117 },
+        { "mes": "2024-03", "altas": 45, "traslados": 18, "fallecidos": 1, "dias_cama_disponibles": 372, "dias_cama_ocupados": 255, "dias_estada": 191 },
+        { "mes": "2024-04", "altas": 41, "traslados": 16, "fallecidos": 5, "dias_cama_disponibles": 367, "dias_cama_ocupados": 315, "dias_estada": 274 },
+        { "mes": "2024-05", "altas": 42, "traslados": 31, "fallecidos": 5, "dias_cama_disponibles": 377, "dias_cama_ocupados": 350, "dias_estada": 297 },
+        { "mes": "2024-06", "altas": 47, "traslados": 21, "fallecidos": 3, "dias_cama_disponibles": 473, "dias_cama_ocupados": 381, "dias_estada": 288 },
+        { "mes": "2024-07", "altas": 56, "traslados": 38, "fallecidos": 2, "dias_cama_disponibles": 509, "dias_cama_ocupados": 478, "dias_estada": 339 },
+        { "mes": "2024-08", "altas": 36, "traslados": 47, "fallecidos": 5, "dias_cama_disponibles": 374, "dias_cama_ocupados": 331, "dias_estada": 312 },
+        { "mes": "2024-09", "altas": 37, "traslados": 35, "fallecidos": 3, "dias_cama_disponibles": 363, "dias_cama_ocupados": 324, "dias_estada": 281 },
+        { "mes": "2024-10", "altas": 44, "traslados": 31, "fallecidos": 2, "dias_cama_disponibles": 375, "dias_cama_ocupados": 340, "dias_estada": 308 },
+        { "mes": "2024-11", "altas": 33, "traslados": 34, "fallecidos": 4, "dias_cama_disponibles": 368, "dias_cama_ocupados": 321, "dias_estada": 215 },
+        { "mes": "2024-12", "altas": 32, "traslados": 31, "fallecidos": 1, "dias_cama_disponibles": 374, "dias_cama_ocupados": 311, "dias_estada": 170 },
+        { "mes": "2025-01", "altas": 47, "traslados": 35, "fallecidos": 2, "dias_cama_disponibles": 392, "dias_cama_ocupados": 376, "dias_estada": 313 },
+        { "mes": "2025-02", "altas": 33, "traslados": 36, "fallecidos": 2, "dias_cama_disponibles": 345, "dias_cama_ocupados": 310, "dias_estada": 211 },
+        { "mes": "2025-03", "altas": 37, "traslados": 30, "fallecidos": 5, "dias_cama_disponibles": 392, "dias_cama_ocupados": 363, "dias_estada": 230 },
+        { "mes": "2025-04", "altas": 33, "traslados": 42, "fallecidos": 4, "dias_cama_disponibles": 375, "dias_cama_ocupados": 351, "dias_estada": 202 },
+        { "mes": "2025-05", "altas": 24, "traslados": 43, "fallecidos": 4, "dias_cama_disponibles": 377, "dias_cama_ocupados": 333, "dias_estada": 189 },
+        { "mes": "2025-06", "altas": 27, "traslados": 34, "fallecidos": 2, "dias_cama_disponibles": 369, "dias_cama_ocupados": 352, "dias_estada": 165 },
+        { "mes": "2025-07", "altas": 24, "traslados": 52, "fallecidos": 4, "dias_cama_disponibles": 376, "dias_cama_ocupados": 365, "dias_estada": 226 },
+        { "mes": "2025-08", "altas": 28, "traslados": 37, "fallecidos": 3, "dias_cama_disponibles": 380, "dias_cama_ocupados": 357, "dias_estada": 243 },
+        { "mes": "2025-09", "altas": 26, "traslados": 48, "fallecidos": 1, "dias_cama_disponibles": 381, "dias_cama_ocupados": 377, "dias_estada": 200 },
+        { "mes": "2025-10", "altas": 38, "traslados": 28, "fallecidos": 3, "dias_cama_disponibles": 420, "dias_cama_ocupados": 420, "dias_estada": 278 },
+        { "mes": "2025-11", "altas": 22, "traslados": 40, "fallecidos": 2, "dias_cama_disponibles": 404, "dias_cama_ocupados": 402, "dias_estada": 201 },
+        { "mes": "2025-12", "altas": 17, "traslados": 43, "fallecidos": 3, "dias_cama_disponibles": 397, "dias_cama_ocupados": 393, "dias_estada": 243 }
       ]
     },
-
     {
       "codigo": 416,
       "nombre": "Obstetricia",
       "nivel_cuidado": { "tipo": "Básico", "color": "green" },
-
       "indicadores": {
         "dias_cama_disponibles": 6535,
         "dias_cama_ocupados": 4320,
@@ -102,7 +170,6 @@
         "indice_ocupacional": 66.1,
         "indice_rotacion": 84.1
       },
-
       "resumen": {
         "letalidad": 0,
         "egresos_total": 1507,
@@ -110,18 +177,48 @@
         "promedio_estada": 2.9,
         "traslados": 7
       },
-
       "egresos": [
-        { "mes": "2025-01", "altas": 107, "traslados": 0, "fallecidos": 0 },
-        { "mes": "2025-02", "altas": 111, "traslados": 1, "fallecidos": 0 },
-        { "mes": "2025-03", "altas": 142, "traslados": 0, "fallecidos": 0 },
-        { "mes": "2025-04", "altas": 122, "traslados": 1, "fallecidos": 0 },
-        { "mes": "2025-05", "altas": 111, "traslados": 0, "fallecidos": 0 }
+        { "mes": "2023-01", "altas": 138, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 506, "dias_cama_ocupados": 412, "dias_estada": 374 },
+        { "mes": "2023-02", "altas": 114, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 475, "dias_cama_ocupados": 289, "dias_estada": 329 },
+        { "mes": "2023-03", "altas": 140, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 518, "dias_cama_ocupados": 405, "dias_estada": 379 },
+        { "mes": "2023-04", "altas": 119, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 511, "dias_cama_ocupados": 353, "dias_estada": 371 },
+        { "mes": "2023-05", "altas": 116, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 531, "dias_cama_ocupados": 313, "dias_estada": 333 },
+        { "mes": "2023-06", "altas": 106, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 419, "dias_cama_ocupados": 277, "dias_estada": 283 },
+        { "mes": "2023-07", "altas": 102, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 473, "dias_cama_ocupados": 266, "dias_estada": 266 },
+        { "mes": "2023-08", "altas": 101, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 537, "dias_cama_ocupados": 340, "dias_estada": 338 },
+        { "mes": "2023-09", "altas": 99, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 523, "dias_cama_ocupados": 331, "dias_estada": 269 },
+        { "mes": "2023-10", "altas": 120, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 532, "dias_cama_ocupados": 386, "dias_estada": 442 },
+        { "mes": "2023-11", "altas": 101, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 508, "dias_cama_ocupados": 332, "dias_estada": 313 },
+        { "mes": "2023-12", "altas": 119, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 534, "dias_cama_ocupados": 380, "dias_estada": 346 },
+        { "mes": "2024-01", "altas": 125, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 515, "dias_cama_ocupados": 343, "dias_estada": 395 },
+        { "mes": "2024-02", "altas": 137, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 484, "dias_cama_ocupados": 352, "dias_estada": 358 },
+        { "mes": "2024-03", "altas": 123, "traslados": 2, "fallecidos": 0, "dias_cama_disponibles": 529, "dias_cama_ocupados": 355, "dias_estada": 361 },
+        { "mes": "2024-04", "altas": 118, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 482, "dias_cama_ocupados": 273, "dias_estada": 288 },
+        { "mes": "2024-05", "altas": 116, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 506, "dias_cama_ocupados": 267, "dias_estada": 272 },
+        { "mes": "2024-06", "altas": 117, "traslados": 2, "fallecidos": 0, "dias_cama_disponibles": 556, "dias_cama_ocupados": 319, "dias_estada": 309 },
+        { "mes": "2024-07", "altas": 100, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 600, "dias_cama_ocupados": 243, "dias_estada": 245 },
+        { "mes": "2024-08", "altas": 118, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 668, "dias_cama_ocupados": 323, "dias_estada": 328 },
+        { "mes": "2024-09", "altas": 112, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 577, "dias_cama_ocupados": 296, "dias_estada": 265 },
+        { "mes": "2024-10", "altas": 107, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 620, "dias_cama_ocupados": 268, "dias_estada": 307 },
+        { "mes": "2024-11", "altas": 115, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 576, "dias_cama_ocupados": 278, "dias_estada": 268 },
+        { "mes": "2024-12", "altas": 102, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 625, "dias_cama_ocupados": 268, "dias_estada": 266 },
+        { "mes": "2025-01", "altas": 107, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 573, "dias_cama_ocupados": 299, "dias_estada": 302 },
+        { "mes": "2025-02", "altas": 110, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 505, "dias_cama_ocupados": 361, "dias_estada": 308 },
+        { "mes": "2025-03", "altas": 142, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 538, "dias_cama_ocupados": 357, "dias_estada": 408 },
+        { "mes": "2025-04", "altas": 121, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 526, "dias_cama_ocupados": 344, "dias_estada": 337 },
+        { "mes": "2025-05", "altas": 111, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 560, "dias_cama_ocupados": 320, "dias_estada": 287 },
+        { "mes": "2025-06", "altas": 116, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 550, "dias_cama_ocupados": 343, "dias_estada": 372 },
+        { "mes": "2025-07", "altas": 141, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 541, "dias_cama_ocupados": 384, "dias_estada": 412 },
+        { "mes": "2025-08", "altas": 114, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 542, "dias_cama_ocupados": 349, "dias_estada": 313 },
+        { "mes": "2025-09", "altas": 119, "traslados": 1, "fallecidos": 0, "dias_cama_disponibles": 544, "dias_cama_ocupados": 375, "dias_estada": 399 },
+        { "mes": "2025-10", "altas": 142, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 556, "dias_cama_ocupados": 410, "dias_estada": 374 },
+        { "mes": "2025-11", "altas": 134, "traslados": 0, "fallecidos": 0, "dias_cama_disponibles": 528, "dias_cama_ocupados": 375, "dias_estada": 442 },
+        { "mes": "2025-12", "altas": 143, "traslados": 2, "fallecidos": 0, "dias_cama_disponibles": 572, "dias_cama_ocupados": 403, "dias_estada": 398 }
       ]
     }
   ],
-
   "glosas_base": [
+    { "titulo": "Altas", "descripcion": "Cantidad de pacientes que son dados de alta vivos del establecimiento (excluye traslados y fallecimientos)." },
     { "titulo": "Días Cama Disponibles", "descripcion": "Cantidad total de días cama disponibles en el periodo." },
     { "titulo": "Días Cama Ocupados", "descripcion": "Cantidad total de días cama efectivamente ocupados." },
     { "titulo": "Días de Estada", "descripcion": "Promedio de días que un paciente permanece hospitalizado." },
