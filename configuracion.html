@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Configuración | Hospital</title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/configuracion.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="logo">🏥 Hospital SJ</div>
+
+      <ul class="menu" id="menu">
+        <li data-page="dashboard.html">Dashboard</li>
+        <li data-page="rem.html">REM</li>
+        <li data-page="camas.html">Camas</li>
+        <li data-page="indicadores.html">Indicadores</li>
+        <li data-page="configuracion.html">Configuración</li>
+        <li class="logout" onclick="logout()">Salir</li>
+      </ul>
+    </div>
+
+    <div class="user-box" id="usuario"></div>
+  </aside>
+
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <h1>Configuración del sistema</h1>
+    </div>
+
+    <section class="card">
+
+      <h3>⚙️ Preferencias</h3>
+
+      <div class="setting">
+        <label>
+          <input type="checkbox" id="darkMode">
+          🌙 Modo oscuro
+        </label>
+      </div>
+
+      <div class="setting">
+        <label>
+          <input type="checkbox" id="notifications">
+          🔔 Notificaciones activas
+        </label>
+      </div>
+
+      <div class="setting">
+        <label>
+          <input type="checkbox" id="animations" checked>
+          ⚡ Animaciones UI
+        </label>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script src="js/configuraciones.js"></script>
+
+<script>
+/* MENU */
+const menuItems = document.querySelectorAll("#menu li[data-page]");
+const currentPage = window.location.pathname.split("/").pop();
+
+menuItems.forEach(item => {
+  if (item.dataset.page === currentPage) {
+    item.classList.add("active");
+  }
+
+  item.addEventListener("click", () => {
+    window.location.href = item.dataset.page;
+  });
+});
+
+/* LOGOUT */
+function logout() {
+  localStorage.removeItem("auth");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

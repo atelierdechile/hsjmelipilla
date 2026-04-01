@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>REM | Hospital San José</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+  <link rel="stylesheet" href="css/rem.css"/>
+
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- CHART -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="app">
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">🏥 Hospital SJ</div>
+
+    <ul class="menu">
+      <li onclick="location.href='dashboard.html'">Dashboard</li>
+      <li class="active">REM</li>
+      <li onclick="location.href='camas.html'">Camas</li>
+      <li onclick="location.href='indicadores.html'">Indicadores</li>
+      <li onclick="location.href='configuracion.html'">Configuración</li>
+      <li onclick="logout()">Salir</li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+      <div>
+        <h1 class="rem-title">Gestión REM - Nivel de Cuidado</h1>
+
+        <div class="nivel-badge" id="nivelBadge">
+          Nivel: --
+        </div>
+      </div>
+
+      <div class="filters">
+        <select id="selectorAnio"></select>
+        <select id="selectorMes"></select>
+        <select id="selectorNivel"></select>
+        <button id="btnExportarPDF">Exportar</button>
+      </div>
+
+    </header>
+
+    <!-- KPIs -->
+    <section class="kpis">
+
+      <div class="kpi kpi-disponibles">
+        <h4>Días Disponibles</h4>
+        <strong id="camasDisponibles">--</strong>
+      </div>
+
+      <div class="kpi kpi-ocupados">
+        <h4>Días Ocupados</h4>
+        <strong id="camaOcupadas">--</strong>
+      </div>
+
+      <div class="kpi kpi-estada">
+        <h4>Días Estada</h4>
+        <strong id="diasEstada">--</strong>
+      </div>
+
+      <div class="kpi kpi-indice">
+        <h4>Índice Ocupacional</h4>
+        <strong id="indiceOcupacional">--</strong>
+      </div>
+
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard-layout">
+
+      <!-- IZQUIERDA -->
+      <div class="main-content">
+
+        <!-- CARD PRINCIPAL -->
+        <section class="card-glosa-dinamica">
+          <h3 id="tituloGlosa">Selecciona una glosa</h3>
+          <div id="valorGlosa">--</div>
+          <p id="descGlosa">Aquí verás el detalle del indicador</p>
+        </section>
+
+        <!-- GRÁFICO BARRAS -->
+        <section class="chart-full">
+          <h3>Número de Egresos</h3>
+
+          <div class="chart-container">
+            <canvas id="graficoEgresos"></canvas>
+          </div>
+        </section>
+
+        <!-- DONUT -->
+        <section class="chart-full">
+          <h3>Distribución de Ocupación</h3>
+
+          <div class="chart-donut-container">
+            <canvas id="graficoDonut"></canvas>
+          </div>
+        </section>
+
+        <!-- 🔥 NUEVO GRÁFICO DE LÍNEA -->
+        <section class="chart-full">
+          <h3>Evolución Índice Ocupacional</h3>
+
+          <div class="chart-container">
+            <canvas id="graficoLinea"></canvas>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- DERECHA (GLOSAS) -->
+      <aside class="sidebar-glosas">
+
+        <div class="glosas-header">
+          <h3>Glosas</h3>
+          <select id="selectorGlosa"></select>
+        </div>
+
+        <div id="contenedorGlosas"></div>
+
+      </aside>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- JS -->
+<script src="js/rem.js"></script>
+
+</body>
+</html>

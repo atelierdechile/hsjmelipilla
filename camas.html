@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camas | Hospital San José</title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/camas.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="logo">🏥 Hospital SJ</div>
+
+      <ul class="menu" id="menu">
+        <li data-page="dashboard.html">Dashboard</li>
+        <li data-page="rem.html">REM</li>
+        <li data-page="camas.html">Camas</li>
+        <li data-page="indicadores.html">Indicadores</li>
+        <li data-page="configuracion.html">Configuración</li>
+        <li class="logout" onclick="logout()">Salir</li>
+      </ul>
+    </div>
+
+    <div class="user-box" id="usuario"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
+      <div>
+        <h1>Gestión de Camas</h1>
+        <span class="status">● En tiempo real</span>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <section class="kpi-grid">
+      <div class="kpi-card"><span>Disponibles</span><h2 id="kpiDisponibles">0</h2></div>
+      <div class="kpi-card"><span>Ocupadas</span><h2 id="kpiOcupadas">0</h2></div>
+      <div class="kpi-card"><span>Limpieza</span><h2 id="kpiLimpieza">0</h2></div>
+      <div class="kpi-card"><span>Ocupación</span><h2 id="kpiOcupacion">0%</h2></div>
+      <div class="kpi-card"><span>Estadía Prom.</span><h2 id="kpiEstadia">0 días</h2></div>
+    </section>
+
+    <!-- TABLA -->
+    <section class="card">
+      <div class="card-header">
+        <h3>🛏️ Estado de camas</h3>
+        <button class="btn small primary" onclick="abrirModalIngresoGlobal()">+ Nuevo Ingreso</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Servicio</th>
+            <th>Estado</th>
+            <th>Nivel</th>
+            <th>Paciente</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody id="tablaCamas">
+
+          <tr id="fila-101">
+            <td>101</td>
+            <td><span class="badge-servicio">UCI</span></td>
+            <td><span id="estado-101" class="tag red">Ocupada</span></td>
+            <td><span class="nivel alta">Alta</span></td>
+            <td id="paciente-101">Juan Pérez</td>
+            <td>
+              <button class="btn small secondary" onclick="gestionarCama('101')">
+                Gestionar
+              </button>
+            </td>
+          </tr>
+
+          <tr id="fila-102">
+            <td>102</td>
+            <td><span class="badge-servicio">Cirugía</span></td>
+            <td><span id="estado-102" class="tag green">Disponible</span></td>
+            <td><span class="nivel media">Media</span></td>
+            <td id="paciente-102">-</td>
+            <td>
+              <button class="btn small secondary" style="display:none;" onclick="gestionarCama('102')">
+                Gestionar
+              </button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </section>
+
+    <!-- MAPA -->
+    <section class="card">
+      <h3>🗺️ Mapa visual de camas</h3>
+      <div class="mapa-camas" id="mapaCamas"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modalIngreso" class="modal-overlay">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h3>Nuevo Ingreso</h3>
+      <button class="close-btn" onclick="cerrarModalIngreso()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <label>Nombre</label>
+      <input id="inputNombre" class="form-control">
+
+      <label>Edad</label>
+      <input id="inputEdad" type="number" class="form-control">
+
+      <label>Peso</label>
+      <input id="inputPeso" type="number" class="form-control">
+
+      <label>Área</label>
+      <select id="inputServicio" class="form-control">
+        <option>UCI</option>
+        <option>Cirugía</option>
+        <option>Pediatría</option>
+        <option>Maternidad</option>
+      </select>
+
+      <label>Nivel</label>
+      <select id="inputNivel" class="form-control">
+        <option value="baja">Baja</option>
+        <option value="media">Media</option>
+        <option value="alta">Alta</option>
+      </select>
+
+      <label>Cama</label>
+      <select id="selectCama" class="form-control"></select>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn" onclick="cerrarModalIngreso()">Cancelar</button>
+      <button class="btn primary" onclick="guardarIngreso()">Ingresar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- SCRIPTS -->
+<!-- ========================= -->
+
+<script src="js/auth.js"></script>
+<script src="js/navigation.js"></script> <!-- 🔥 NUEVO GLOBAL -->
+<script src="js/camas.js"></script>
+
+<script>
+initProtectedPage();
+
+// USUARIO
+const usuario = JSON.parse(localStorage.getItem("auth"));
+if (usuario) {
+  document.getElementById("usuario").innerText = `👤 ${usuario.username}`;
+}
+
+// LOGOUT
+function logout() {
+  localStorage.removeItem("auth");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

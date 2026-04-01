@@ -1,0 +1,321 @@
+/* ========================= */
+/* RESET FINO */
+/* ========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ========================= */
+/* HERO PRO */
+/* ========================= */
+.hero {
+  height: 100vh;
+  background: url('../assets/img/hp.jpg') no-repeat center/cover;
+  position: relative;
+  will-change: background-position; /* 🔥 mejora parallax */
+}
+
+.overlay {
+  background: linear-gradient(
+    rgba(15, 23, 42, 0.65),
+    rgba(2, 6, 23, 0.92)
+  );
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-content {
+  text-align: center;
+  color: white;
+  max-width: 720px;
+
+  animation: fadeUp 1s ease;
+}
+
+.landing-content h1 {
+  font-size: 52px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.landing-content p {
+  color: #cbd5f5;
+  line-height: 1.7;
+  font-size: 17px;
+}
+
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  padding: 13px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  margin: 6px;
+  display: inline-block;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+.primary {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  color: white;
+}
+
+.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(37,99,235,0.35);
+}
+
+/* 🔥 microinteracción real */
+.primary:active {
+  transform: scale(0.96);
+}
+
+.secondary {
+  background: white;
+  color: #111827;
+}
+
+.secondary:hover {
+  transform: translateY(-3px);
+  background: #e5e7eb;
+}
+
+
+/* ========================= */
+/* HERO STATS */
+/* ========================= */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.hero-stats div {
+  background: rgba(255,255,255,0.05);
+  padding: 14px 18px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  transition: all 0.3s ease;
+  will-change: transform;
+}
+
+.hero-stats div:hover {
+  transform: translateY(-6px) scale(1.05);
+  background: rgba(255,255,255,0.12);
+}
+
+.hero-stats h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.hero-stats span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+
+/* ========================= */
+/* FEATURES */
+/* ========================= */
+.features {
+  padding: 110px 20px;
+  background: #f8fafc;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+
+/* TARJETAS */
+.feature-card {
+  background: white;
+  padding: 35px;
+  border-radius: 20px;
+  width: 300px;
+
+  box-shadow:
+    0 25px 50px rgba(0,0,0,0.06),
+    0 8px 20px rgba(0,0,0,0.04);
+
+  transition: all 0.35s ease;
+
+  position: relative;
+  overflow: hidden;
+
+  will-change: transform;
+}
+
+/* línea premium */
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+/* hover PRO */
+.feature-card:hover {
+  transform: translateY(-12px) scale(1.04);
+  box-shadow:
+    0 35px 70px rgba(0,0,0,0.12),
+    0 12px 30px rgba(0,0,0,0.08);
+}
+
+.feature-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+
+/* ========================= */
+/* CTA */
+/* ========================= */
+.cta {
+  padding: 110px 20px;
+  text-align: center;
+  background: white;
+}
+
+.cta h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.cta p {
+  color: #64748b;
+  margin-bottom: 25px;
+}
+
+
+/* ========================= */
+/* FOOTER */
+/* ========================= */
+.footer {
+  text-align: center;
+  padding: 30px;
+  background: #0f172a;
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+
+/* ========================= */
+/* CONTAINER */
+/* ========================= */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+
+/* ========================= */
+/* ANIMACIONES */
+/* ========================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+@media (max-width: 900px) {
+
+  .landing-content h1 {
+    font-size: 36px;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+}
+/* ========================= */
+/* BOTONES MODO PRUEBA */
+/* ========================= */
+
+.btn-modo {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+
+  border-radius: 10px;
+  border: none;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+/* 🔥 HOVER (cuando pasas el mouse) */
+.btn-modo:hover {
+  background: #94a3b8; /* gris elegante */
+  transform: translateY(-2px);
+}
+
+/* 🔥 CLICK / ACTIVO */
+.btn-modo.active {
+  background: #1e293b; /* gris oscuro */
+  color: white;
+  transform: scale(0.97);
+}
+
+/* 🔥 EFECTO PRESIONADO */
+.btn-modo:active {
+  transform: scale(0.95);
+}
