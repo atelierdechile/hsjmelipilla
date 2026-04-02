@@ -134,7 +134,7 @@ export function OportunidadHospitalizacionPage() {
       actions={
         <div className="filters">
           <select value={year} onChange={(event) => setYear(event.target.value)}>
-            <option value="">Todos los anos</option>
+            <option value="">Todos los años</option>
             {years.map((item) => (
               <option key={item} value={item}>
                 {item}
@@ -166,8 +166,7 @@ export function OportunidadHospitalizacionPage() {
             <span className="opportunity-chip">Monitoreo continuo</span>
             <h2>{currentYearFocus === "Historico" ? "Vista historica consolidada" : `Seguimiento ${currentYearFocus}`}</h2>
             <p>
-              Indicador operativo para controlar la velocidad de acceso a cama de hospitalizacion
-              desde urgencia y detectar periodos con mayor presion asistencial.
+              Indicador operativo para controlar la velocidad de acceso a cama de hospitalización desde urgencia y detectar períodos con mayor presión asistencial.
             </p>
           </div>
           <div className="opportunity-hero-metrics">
@@ -194,7 +193,7 @@ export function OportunidadHospitalizacionPage() {
         <article className="card opportunity-card">
           <span className="opportunity-card-label">Meta</span>
           <h3>{HOSPITALIZATION_INDICATOR.meta}</h3>
-          <p>Se muestra valor cargado y la diferencia respecto a la meta.</p>
+          <p>Se muestra el valor cargado y la diferencia respecto a la meta.</p>
         </article>
 
         <article className="card opportunity-card">
@@ -221,7 +220,7 @@ export function OportunidadHospitalizacionPage() {
           <strong className="highlight-value positive">
             {monthlyHighlights.best ? `${monthlyHighlights.best.compliance.toFixed(1)}%` : "--"}
           </strong>
-          <p>Periodo con mejor acceso a cama dentro del rango analizado.</p>
+          <p>Período con mejor acceso a cama dentro del rango analizado.</p>
         </article>
 
         <article className="card opportunity-highlight-card">
@@ -234,14 +233,14 @@ export function OportunidadHospitalizacionPage() {
           <strong className="highlight-value negative">
             {monthlyHighlights.worst ? `${monthlyHighlights.worst.compliance.toFixed(1)}%` : "--"}
           </strong>
-          <p>Periodo donde la oportunidad quedo mas lejos del objetivo definido.</p>
+          <p>Período donde la oportunidad quedó más lejos del objetivo definido.</p>
         </article>
 
         <article className="card opportunity-highlight-card">
           <span className="opportunity-card-label">Promedio periodo</span>
           <h3>{currentYearFocus}</h3>
           <strong className="highlight-value neutral">{monthlyHighlights.average.toFixed(1)}%</strong>
-          <p>Referencia rapida para interpretar el comportamiento mensual del indicador.</p>
+          <p>Referencia rápida para interpretar el comportamiento mensual del indicador.</p>
         </article>
       </section>
 
@@ -262,7 +261,7 @@ export function OportunidadHospitalizacionPage() {
                 style={{ width: `${Math.min(item.compliance, 100)}%` }}
               />
             </div>
-            <p>{item.difference.toFixed(1)}% diferencia respecto de la meta.</p>
+            <p>{item.difference.toFixed(1)}% de diferencia respecto de la meta.</p>
           </article>
         ))}
       </section>
@@ -316,7 +315,7 @@ export function OportunidadHospitalizacionPage() {
           </article>
 
           <article className="card opportunity-history-card">
-            <h3>Historico por ano</h3>
+            <h3>Historico por año</h3>
             <div className="chart-container">
               <ChartCanvas
                 type="line"
@@ -362,7 +361,7 @@ export function OportunidadHospitalizacionPage() {
               <li>
                 {summary.compliance >= HOSPITALIZATION_TARGET
                   ? "El indicador supera la meta definida y conviene sostener el comportamiento de los meses fuertes."
-                  : "El indicador queda bajo la meta y conviene priorizar los meses mas bajos para intervenciones."}
+                  : "El indicador queda bajo la meta y conviene priorizar los meses más bajos para intervenciones."}
               </li>
             </ul>
           </article>
