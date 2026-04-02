@@ -26,7 +26,6 @@ export function OportunidadHospitalizacionPage() {
   const [year, setYear] = useState("2025");
   const [month, setMonth] = useState("");
   const [establishment, setEstablishment] = useState(HOSPITALIZATION_INDICATOR.establishment);
-  const [service, setService] = useState(HOSPITALIZATION_INDICATOR.service);
 
   const years = [...new Set(HOSPITALIZATION_DATA.map((item) => item.year))];
 
@@ -153,9 +152,6 @@ export function OportunidadHospitalizacionPage() {
             <option value={HOSPITALIZATION_INDICATOR.establishment}>
               {HOSPITALIZATION_INDICATOR.establishment}
             </option>
-          </select>
-          <select value={service} onChange={(event) => setService(event.target.value)}>
-            <option value={HOSPITALIZATION_INDICATOR.service}>{HOSPITALIZATION_INDICATOR.service}</option>
           </select>
         </div>
       }
