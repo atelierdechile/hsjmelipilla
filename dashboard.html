@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Hospital San José</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="app">
+
+<!-- ================= AUTH ================= -->
+<script src="js/auth.js"></script>
+<script>
+  initProtectedPage();
+</script>
+
+<div class="layout">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+
+    <!-- 🔥 BLOQUE SUPERIOR -->
+    <div class="sidebar-top">
+
+      <div class="logo">🏥 Hospital SJ</div>
+
+      <ul class="menu" id="menu">
+        <li data-page="dashboard.html"> Dashboard</li>
+        <li data-page="rem.html"> REM</li>
+        <li data-page="camas.html"> Camas</li>
+        <li data-page="indicadores.html">Indicadores</li>
+        <li data-page="configuracion.html"> Configuración</li>
+        <li class="logout" onclick="logout()"> Salir</li>
+      </ul>
+
+    </div>
+
+    <!-- 🔥 USUARIO ABAJO SIEMPRE -->
+    <div class="user-box" id="usuario"></div>
+
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+
+    <!-- HEADER -->
+    <div class="topbar">
+      <div>
+        <h1>Dashboard Hospitalario</h1>
+        <span class="status">● En tiempo real</span>
+      </div>
+    </div>
+
+    <!-- ================= KPIs ================= -->
+    <section class="kpis">
+
+      <div class="card kpi primary">
+        <span>ÍNDICE OCUPACIONAL</span>
+        <h2 id="kpiOcupacion">--</h2>
+      </div>
+
+      <div class="card kpi green">
+        <span>PROM. DÍAS ESTADA</span>
+        <h2 id="kpiEstada">--</h2>
+      </div>
+
+      <div class="card kpi orange">
+        <span>ÍNDICE DE ROTACIÓN</span>
+        <h2 id="kpiRotacion">--</h2>
+      </div>
+
+      <div class="card kpi red">
+        <span>TASA LETALIDAD</span>
+        <h2 id="kpiLetalidad">--</h2>
+      </div>
+
+    </section>
+
+    <!-- ================= CHARTS ================= -->
+    <section class="grid-2">
+
+      <!-- EGRESOS -->
+      <div class="card">
+        <h3>📈 Egresos</h3>
+
+        <div class="chart-filters" id="filtrosEgresos">
+          <label><input type="checkbox" value="0" checked> Altas</label>
+          <label><input type="checkbox" value="1" checked> Traslados</label>
+          <label><input type="checkbox" value="2" checked> Fallecidos</label>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="egresos"></canvas>
+        </div>
+      </div>
+
+      <!-- DISTRIBUCIÓN -->
+      <div class="card">
+        <h3>🛏️ Distribución</h3>
+
+        <div class="chart-filters" id="filtrosDistribucion">
+          <label><input type="checkbox" value="0" checked> UCI Adulto</label>
+          <label><input type="checkbox" value="1" checked> UTI Adulto</label>
+          <label><input type="checkbox" value="2" checked> Obstetricia</label>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="ocupacion"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SERVICIOS + ALERTAS ================= -->
+    <section class="grid-2">
+
+      <div class="card">
+        <h3>📊 Ocupación por Servicio</h3>
+        <div id="contenedorBarrasServicio"></div>
+      </div>
+
+      <div class="card alerts" id="contenedorAlertas">
+        <h3>⚠️ Alertas</h3>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- ================= LIBRERÍAS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ================= JS ================= -->
+<script type="module" src="js/dashboard.js"></script>
+<script src="js/navigation.js"></script>
+
+<!-- ================= USUARIO ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const usuario = JSON.parse(localStorage.getItem("auth"));
+  if (usuario) {
+    document.getElementById("usuario").innerText =
+      `👤 ${usuario.username || "Usuario"}`;
+  }
+});
+
+function logout() {
+  localStorage.removeItem("auth");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

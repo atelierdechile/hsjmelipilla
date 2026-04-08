@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Indicadores | Hospital San José</title>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/indicadores.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<script src="js/auth.js"></script>
+
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <div>
+      <div class="logo">🏥 Hospital SJ</div>
+
+      <ul class="menu" id="menu">
+        <li data-page="dashboard.html">Dashboard</li>
+        <li data-page="rem.html">REM</li>
+        <li data-page="camas.html">Camas</li>
+        <li data-page="indicadores.html">Indicadores</li>
+        <li data-page="configuracion.html">Configuración</li>
+        <li class="logout" onclick="logout()">Salir</li>
+      </ul>
+    </div>
+
+    <div class="user-box" id="usuario"></div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <div class="topbar">
+      <div>
+        <h1>Indicadores Clínicos</h1>
+        <span class="status">● En tiempo real</span>
+      </div>
+    </div>
+
+
+    <section class="kpis">
+
+      <div class="indicator-box success">
+        <i class="indicator-icon">🛏️</i>
+        <span>TASA OCUPACIÓN GLOBAL</span>
+        <h2 id="indOcupacion">--%</h2>
+      </div>
+
+      <div class="indicator-box primary">
+        <i class="indicator-icon">📅</i>
+        <span>PROMEDIO DE ESTADA</span>
+        <h2 id="indEstada">-- días</h2>
+      </div>
+
+      <div class="indicator-box warning">
+        <i class="indicator-icon">🔄</i>
+        <span>ÍNDICE DE ROTACIÓN</span>
+        <h2 id="indRotacion">--</h2>
+      </div>
+
+      <div class="indicator-box danger">
+        <i class="indicator-icon">⚠️</i>
+        <span>TASA LETALIDAD</span>
+        <h2 id="indLetalidad">--%</h2>
+      </div>
+
+    </section>
+
+
+    <section class="grid-2">
+
+      <div class="card">
+        <h3>📈 Ocupación mensual</h3>
+        <div class="chart-container">
+          <canvas id="ocupacionChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📊 Evolución de Egresos</h3>
+        <div class="chart-container">
+          <canvas id="esperaChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script type="module" src="js/indicadores.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* MENU ACTIVO */
+  const menuItems = document.querySelectorAll("#menu li[data-page]");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  menuItems.forEach(item => {
+
+    if (item.dataset.page === currentPage) {
+      item.classList.add("active");
+    }
+
+    item.addEventListener("click", () => {
+      window.location.href = item.dataset.page;
+    });
+
+  });
+
+  /* USUARIO */
+  const user = localStorage.getItem("user");
+  const rol = localStorage.getItem("rol");
+
+  if (user && rol) {
+    document.getElementById("usuario").innerText = `👤 ${user} (${rol})`;
+  } else {
+    // Fallback por si usan el localStorage viejo
+    const authOld = JSON.parse(localStorage.getItem("auth"));
+    if (authOld) {
+      document.getElementById("usuario").innerText = `👤 ${authOld.username || "Usuario"}`;
+    }
+  }
+
+});
+
+
+/* LOGOUT */
+function logout() {
+  localStorage.removeItem("auth");
+  localStorage.removeItem("user");
+  localStorage.removeItem("rol");
+  localStorage.removeItem("expires_at");
+  window.location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>
